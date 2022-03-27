@@ -6,15 +6,15 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function MediaCard() {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface MediaCardPageProps {
+  image: string;
+}
+
+const MediaCardPage: React.FunctionComponent<MediaCardPageProps> = (props) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      />
+      <CardMedia component="img" height="140" image={props.image} alt="img" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Lizard
@@ -30,4 +30,6 @@ export default function MediaCard() {
       </CardActions>
     </Card>
   );
-}
+};
+
+export default MediaCardPage;

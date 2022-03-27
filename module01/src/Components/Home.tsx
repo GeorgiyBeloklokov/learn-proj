@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import * as React from 'react';
 import { mockCardDB } from './assets/MockData';
-import MediaCard from './Card';
+import MediaCardPage from './Card';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IHomeProps {}
@@ -10,9 +10,9 @@ const HomePage: React.FunctionComponent<IHomeProps> = () => {
   return (
     <div>
       <Grid container spacing={3}>
-        {mockCardDB.cards.map((card, index) => (
+        {mockCardDB.map((item) => (
           <Grid
-            key={card.id}
+            key={item.id}
             sx={{ display: 'flex', justifyContent: 'space-between' }}
             xs={12}
             sm={6}
@@ -20,7 +20,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = () => {
             lg={2}
             item
           >
-            <MediaCard /* card={card} index={index} loading={loading} */ />
+            <MediaCardPage image={item.image} />
           </Grid>
         ))}
       </Grid>
