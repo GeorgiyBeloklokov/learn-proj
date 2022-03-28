@@ -13,10 +13,7 @@ const AppRouter: React.FunctionComponent<IAppProps> = (props) => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/aboutus" element={<AboutUs />} />
-        {/* <Route path="/newquestion/:id" element={<CreateQuestion />} /> */}
-        {/* <Route path="/homepage" element={<HomePage />} /> */}
         <Route path="/error404" element={<Error404 />} />
-
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>

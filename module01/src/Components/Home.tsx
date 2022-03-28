@@ -12,6 +12,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = () => {
       <Grid container spacing={3}>
         {mockCardDB.map((item) => (
           <Grid
+            data-testid="card-num"
             key={item.id}
             sx={{ display: 'flex', justifyContent: 'space-between' }}
             xs={12}
@@ -20,7 +21,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = () => {
             lg={2}
             item
           >
-            <MediaCardPage image={item.image} />
+            <MediaCardPage image={item.image} text={item.text} />
           </Grid>
         ))}
       </Grid>

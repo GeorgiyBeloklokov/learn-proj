@@ -2,9 +2,13 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 
-export default function AboutUs() {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IAboutUsProps {}
+
+const AboutUs: React.FunctionComponent<IAboutUsProps> = () => {
   return (
     <Box
+      data-testid="about-us-test"
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -20,4 +24,6 @@ export default function AboutUs() {
       <Paper elevation={3} />
     </Box>
   );
-}
+};
+
+export default AboutUs;

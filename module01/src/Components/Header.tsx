@@ -107,6 +107,7 @@ export default class SearchAppBar extends React.Component<ISearchAppBarProps, IS
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
+                data-testid="search"
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 value={this.state.searchValue}
