@@ -1,6 +1,4 @@
-import React from 'react';
-import './App.css';
-import SearchAppBar from './Components/Header';
+import SearchAppBar from './Components/Header/Header';
 import AppRouter from './Components/ApiRouter';
 
 function App() {

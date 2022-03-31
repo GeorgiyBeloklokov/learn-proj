@@ -52,32 +52,28 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ISearchAppBarProps {}
+export interface IHeaderProps {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ISearchAppBarState {
+export interface IHeaderState {
   searchValue: string;
 }
 
-export default class SearchAppBar extends React.Component<ISearchAppBarProps, ISearchAppBarState> {
-  constructor(props: ISearchAppBarProps) {
+export default class Header extends React.Component<IHeaderProps, IHeaderState> {
+  constructor(props: IHeaderProps) {
     super(props);
-
     this.state = {
       searchValue: '',
     };
-    console.log(`test state:`, this.state.searchValue);
   }
   componentDidMount() {
     const isData = localStorage.getItem('searchValue') || 'no data';
     this.setState({ searchValue: isData });
-    console.log(`test mount`);
   }
 
   handleChange = (event: React.KeyboardEvent<HTMLInputElement> & { target: HTMLInputElement }) => {
     this.setState({ searchValue: event.target.value });
     localStorage.setItem('searchValue', event.target.value);
-    console.log(`test handleChange`, event.target.value);
   };
 
   public render() {

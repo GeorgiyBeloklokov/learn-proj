@@ -7,12 +7,12 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface MediaCardPageProps {
+export interface CardPageProps {
   image: string;
   text: string;
 }
 
-const MediaCardPage: React.FunctionComponent<MediaCardPageProps> = (props) => {
+const CardPage: React.FunctionComponent<CardPageProps> = (props) => {
   return (
     <Card sx={{ maxWidth: 345 }} data-testid="card">
       <CardMedia component="img" height="140" image={props.image} alt="img" />
@@ -32,4 +32,4 @@ const MediaCardPage: React.FunctionComponent<MediaCardPageProps> = (props) => {
   );
 };
 
-export default MediaCardPage;
+export default CardPage;
