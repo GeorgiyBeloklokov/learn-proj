@@ -8,20 +8,20 @@ import Typography from '@mui/material/Typography';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CardPageProps {
-  image: string;
-  text: string;
+  surName: string;
+  name: string;
 }
 
 const CardPage: React.FunctionComponent<CardPageProps> = (props) => {
   return (
     <Card sx={{ maxWidth: 345 }} data-testid="card">
-      <CardMedia component="img" height="140" image={props.image} alt="img" />
+      <CardMedia component="img" height="140" /* image={props.image} */ alt="img" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {props.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {props.text}
+          {props.surName}
         </Typography>
       </CardContent>
       <CardActions>

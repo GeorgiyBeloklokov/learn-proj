@@ -2,19 +2,18 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import CardPage from './CardPage';
 
-const image = 'https://www.russiadiscovery.ru/upload/files/files/Kavkazskie_gory.jpg';
+const surName = 'looo';
 
-const text =
-  'Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica';
+const name = 'blabla';
 
 test('renders learn react link', () => {
-  render(<CardPage image={image} text={text} />);
+  render(<CardPage name={name} surName={surName} />);
   const element = screen.findAllByText(/props.image/i);
   expect(element).toBeTruthy();
 });
 
 test('renders component', () => {
-  render(<CardPage image={image} text={text} />);
+  render(<CardPage name={name} surName={surName} />);
   const card = screen.getByTestId('card');
   expect(card).toBeDefined();
 });
