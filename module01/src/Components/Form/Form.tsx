@@ -44,6 +44,8 @@ export interface IFormState {
   error: string;
   isErrorFieldName: boolean;
   isErrorFieldSurname: boolean;
+  isErrorFieldDatePicker: boolean;
+  isErrorFieldCountry: boolean;
   cardData: Array<IArrayCard>;
 }
 
@@ -61,6 +63,8 @@ export default class Form extends React.Component<IFormProps, IFormState> {
       error: 'Error - enter data please',
       isErrorFieldName: false,
       isErrorFieldSurname: false,
+      isErrorFieldDatePicker: false,
+      isErrorFieldCountry: false,
       cardData: [],
     };
   }
@@ -68,16 +72,12 @@ export default class Form extends React.Component<IFormProps, IFormState> {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    const name = formData.get(`name`);
+    const name = formData.get(`name`) as string;
     console.log(`test name:`, name);
     if (name === '') {
       this.setState({ isErrorFieldName: true });
       this.setState({ isFormValid: true });
-    } /* else {
-      this.setState((state) => {
-        return { cardData: [...state.cardData, { newName: name }] };
-      });
-    } */
+    }
 
     const surname = formData.get(`surname`);
     console.log(`test name:`, surname);
@@ -89,52 +89,65 @@ export default class Form extends React.Component<IFormProps, IFormState> {
     }
     const datePicker = formData.get(`datePicker`);
     console.log(`test IsDatePicker:`, datePicker);
-    const country = formData.get(`country`);
+    if (datePicker === '') {
+      this.setState({ isErrorFieldDatePicker: true });
+    } else {
+      this.setState({ isErrorFieldDatePicker: false });
+    }
+    const country = formData.get(`country`) as string;
     console.log(`test country:`, country);
-    const agreeCheckBox = formData.get(`agreeCheckBox`) ? true : false;
+    if (country === '') {
+      this.setState({ isErrorFieldCountry: true });
+    } else {
+      this.setState({ isErrorFieldCountry: false });
+    }
+    const agreeCheckBox = !!formData.get('agreeCheckBox');
     console.log(`test agreeCheckBox:`, agreeCheckBox);
-    const giftFirst = formData.get(`giftFirst`) ? true : false;
+    const giftFirst = !!formData.get(`giftFirst`);
     console.log(`test giftFirst:`, giftFirst);
-    const giftSecond = formData.get(`giftSecond`) ? true : false;
+    const giftSecond = !!formData.get(`giftSecond`);
     console.log(`test giftSecond:`, giftSecond);
-    const giftThird = formData.get(`giftThird`) ? true : false;
+    const giftThird = !!formData.get(`giftThird`);
     console.log(`test giftThird:`, giftThird);
-    const maleFemale = formData.get(`male/female`) ? true : false;
+    const maleFemale = !!formData.get(`male/female`);
     console.log(`test male/female:`, maleFemale);
-    const promotionNotification = formData.get(`promotionNotification`) ? true : false;
+    const promotionNotification = !!formData.get(`promotionNotification`);
     console.log(`test promotionNotification:`, promotionNotification);
     const image = formData.get(`image`);
     console.log(`test image:`, image);
-    this.setState((state) => {
-      return {
-        cardData: [
-          ...state.cardData,
-          {
-            id: Date.now(),
-            newName: name,
-            newSurName: surname,
-            newDatePicker: datePicker,
-            newCountry: country,
-            newAgreeCheckBox: agreeCheckBox,
-            newGiftFirst: giftFirst,
-            newGiftSecond: giftSecond,
-            newGiftThird: giftThird,
-            newMaleFemale: maleFemale,
-            newPromotionNotification: promotionNotification,
-            newImage: image,
-          },
-        ],
-      };
-    });
+    if (
+      !this.state.isErrorFieldName ||
+      !this.state.isErrorFieldSurname ||
+      !this.state.isErrorFieldDatePicker ||
+      !this.state.isErrorFieldCountry
+    ) {
+      this.setState((state) => {
+        return {
+          cardData: [
+            ...state.cardData,
+            {
+              id: Date.now(),
+              newName: name,
+              newSurName: surname,
+              newDatePicker: datePicker,
+              newCountry: country,
+              newAgreeCheckBox: agreeCheckBox,
+              newGiftFirst: giftFirst,
+              newGiftSecond: giftSecond,
+              newGiftThird: giftThird,
+              newMaleFemale: maleFemale,
+              newPromotionNotification: promotionNotification,
+              newImage: image,
+            },
+          ],
+        };
+      });
+    }
   };
 
   Input = styled('input')({
     display: 'none',
   });
-
-  onBlurHandeer = () => {
-    this.setState({ isFormValid: true });
-  };
 
   public render() {
     return (
@@ -162,6 +175,9 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               defaultValue="Your Surname.."
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
+              {this.state.isErrorFieldDatePicker && (
+                <div style={{ color: 'red' }}>{this.state.error}</div>
+              )}
               <DatePicker
                 label="Date input"
                 value={this.state.valuePicker}
@@ -174,6 +190,9 @@ export default class Form extends React.Component<IFormProps, IFormState> {
                 }}
               />
             </LocalizationProvider>
+            {this.state.isErrorFieldCountry && (
+              <div style={{ color: 'red' }}>{this.state.error}</div>
+            )}
             <FormControl sx={{ mt: 2, ml: 2, width: '25ch' }}>
               <InputLabel id="demo-simple-select-label">Country</InputLabel>
               <Select
@@ -311,17 +330,6 @@ export default class Form extends React.Component<IFormProps, IFormState> {
             {this.state.cardData.map((item) => (
               <div key={item?.id}>
                 <CardPage name={item.newName} surName={item.newSurName} />
-                {/* <div>name:{item.newName}</div>
-                <div>surname:{item.newSurName}</div>
-                <div>data:{item.newDatePicker}</div>
-                <div>country;{item.newCountry}</div>
-                <div>{item.newAgreeCheckBox}</div>
-                <div>{item.newGiftFirst}</div>
-                <div>{item.newGiftSecond}</div>
-                <div>{item.newGiftThird}</div>
-                <div>{item.newMaleFemale}</div>
-                <div>{item.newPromotionNotification}</div> */}
-                {/* <div>{item.newImage}</div> */}
               </div>
             ))}
           </div>

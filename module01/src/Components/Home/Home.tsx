@@ -19,7 +19,7 @@ const Home: React.FunctionComponent<IHomeProps> = () => {
           lg={2}
           item
         >
-          <CardPage image={item.image} text={item.text} />
+          <CardPage surName={item.surName} name={item.name} />
         </Grid>
       ))}
     </Grid>
