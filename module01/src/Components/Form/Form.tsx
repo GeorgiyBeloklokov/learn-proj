@@ -115,12 +115,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
     console.log(`test promotionNotification:`, promotionNotification);
     const image = formData.get(`image`);
     console.log(`test image:`, image);
-    if (
-      !this.state.isErrorFieldName ||
-      !this.state.isErrorFieldSurname ||
-      !this.state.isErrorFieldDatePicker ||
-      !this.state.isErrorFieldCountry
-    ) {
+    if (name !== '' && surname !== '' && datePicker !== '' && country !== '') {
       this.setState((state) => {
         return {
           cardData: [
@@ -326,7 +321,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
             </div>
           </div>
           <div>
-            {/* <div>{console.log(this.state.cardData)}</div> */}
+            <div>{console.log(this.state.cardData)}</div>
             {this.state.cardData.map((item) => (
               <div key={item?.id}>
                 <CardPage name={item.newName} surName={item.newSurName} />
