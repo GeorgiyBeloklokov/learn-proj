@@ -8,17 +8,27 @@ import HomePage from './Home/Home';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IAppProps {}
 
-const AppRouter: React.FunctionComponent<IAppProps> = (props) => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/error404" element={<Error404 />} />
-        <Route path="/form" element={<Form />} />
-        <Route path="*" element={<Error404 />} />
-      </Routes>
-    </BrowserRouter>
-  );
-};
-export default AppRouter;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IAppState {}
+
+export default class AppRouter extends React.Component<IAppProps, IAppState> {
+  constructor(props: IAppProps) {
+    super(props);
+
+    this.state = {};
+  }
+
+  public render() {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/error404" element={<Error404 />} />
+          <Route path="/form" element={<Form />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
+}

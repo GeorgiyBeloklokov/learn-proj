@@ -8,6 +8,9 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -96,8 +99,16 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
             >
-              MUI
+              RSSchool
             </Typography>
+            <Stack spacing={2} direction="row">
+              {/* <Link to="/form">Form</Link> */}
+              {/* <Button color="inherit" variant="contained" component={Link} to={'/form'}>
+                Form
+              </Button> */}
+              <Button variant="contained">Contained</Button>
+              <Button variant="contained">Outlined</Button>
+            </Stack>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />

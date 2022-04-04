@@ -6,6 +6,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { IArrayCard } from '../Form/Form';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 
 export default class CardPage extends React.Component<IArrayCard> {
   constructor(props: IArrayCard) {
@@ -16,42 +18,48 @@ export default class CardPage extends React.Component<IArrayCard> {
   }
   public render() {
     return (
-      <Card sx={{ maxWidth: 345 }} data-testid="card">
-        <CardMedia component="img" height="140" /* image={props.image} */ alt="img" />
+      <Card sx={{ maxWidth: 345 }}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="140"
+          image="/static/images/cards/contemplative-reptile.jpg"
+        />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h6" component="div">
             {this.props.newName}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography gutterBottom variant="h6" component="div">
             {this.props.newSurName}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography gutterBottom variant="h6" component="div">
             {this.props.newDatePicker}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography gutterBottom variant="h6" component="div">
             {this.props.newCountry}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {this.props.newAgreeCheckBox}
+          <Typography gutterBottom variant="h6" component="div">
+            {this.props.newAgreeCheckBox
+              ? 'newAgreeCheckBox: order'
+              : 'newAgreeCheckBox: out of order'}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {this.props.newGiftFirst}
+          <Typography gutterBottom variant="h6" component="div">
+            {this.props.newGiftFirst ? 'newGiftFirst: in order' : 'newGiftFirst: out of order'}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {this.props.newGiftSecond}
+          <Typography gutterBottom variant="h6" component="div">
+            {this.props.newGiftSecond ? 'newGiftSecond: in order' : 'newGiftSecond: out of order'}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {this.props.newGiftThird}
+          <Typography gutterBottom variant="h6" component="div">
+            {this.props.newGiftThird ? 'newGiftThird: in order' : 'newGiftThird: out of order'}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {this.props.newMaleFemale}
+          <Typography gutterBottom variant="h6" component="div">
+            {this.props.newMaleFemale ? 'newMaleFemale: in order' : 'newMaleFemale: out of order'}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {this.props.newPromotionNotification}
+          <Typography gutterBottom variant="h6" component="div">
+            {this.props.newPromotionNotification
+              ? 'newPromotionNotification: in order'
+              : 'newPromotionNotification: out of order'}
           </Typography>
-          {/* <Typography variant="body2" color="text.secondary">
-          {props.newImage}
-        </Typography> */}
         </CardContent>
         <CardActions>
           <Button size="small">Share</Button>

@@ -13,6 +13,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import CardPage from '../CardPage/CardPage';
+import { Grid } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export interface IArrayCard {
   id?: number;
@@ -47,14 +49,15 @@ export interface IFormState {
   isErrorFieldDatePicker: boolean;
   isErrorFieldCountry: boolean;
   cardData: Array<IArrayCard>;
+  isSavedFormMessage: boolean;
 }
 
 export default class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
     this.state = {
-      valuePicker: '',
-      valueSelect: '',
+      valuePicker: null,
+      valueSelect: null,
       formData: '',
       switchFirsDate: false,
       switchSecondDate: false,
@@ -66,13 +69,14 @@ export default class Form extends React.Component<IFormProps, IFormState> {
       isErrorFieldDatePicker: false,
       isErrorFieldCountry: false,
       cardData: [],
+      isSavedFormMessage: false,
     };
   }
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    const name = formData.get(`name`) as string;
+    const name = formData.get(`name`);
     console.log(`test name:`, name);
     if (name === '') {
       this.setState({ isErrorFieldName: true });
@@ -94,7 +98,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
     } else {
       this.setState({ isErrorFieldDatePicker: false });
     }
-    const country = formData.get(`country`) as string;
+    const country = formData.get(`country`);
     console.log(`test country:`, country);
     if (country === '') {
       this.setState({ isErrorFieldCountry: true });
@@ -137,6 +141,13 @@ export default class Form extends React.Component<IFormProps, IFormState> {
           ],
         };
       });
+      this.setState({ isSavedFormMessage: true });
+      setTimeout(() => {
+        this.setState({ isSavedFormMessage: false });
+      }, 2300);
+      e.currentTarget.reset();
+      this.setState({ valuePicker: null });
+      this.setState({ valueSelect: null });
     }
   };
 
@@ -156,7 +167,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               name="name"
               id="outlined-required"
               label="Name"
-              defaultValue="Your Name.."
+              placeholder="Your Name.."
             />
             {this.state.isErrorFieldSurname && (
               <div style={{ color: 'red' }}>{this.state.error}</div>
@@ -167,7 +178,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               name="surname"
               id="outlined-disabled"
               label="Surname"
-              defaultValue="Your Surname.."
+              placeholder="Your Surname.."
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               {this.state.isErrorFieldDatePicker && (
@@ -197,7 +208,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
                 label="Country"
                 name="country"
                 onChange={(e) => {
-                  this.setState({ valueSelect: e.target.value as string });
+                  this.setState({ valueSelect: e.target.value /* as string */ });
                   if (e) {
                     this.setState({ isFormValid: true });
                   }
@@ -318,12 +329,24 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               >
                 Submit form data
               </Button>
+              {this.state.isSavedFormMessage && (
+                <div style={{ color: 'red', fontSize: 30 }}>Your data is saved</div>
+              )}
             </div>
           </div>
-          <div>
-            {/* <div>{console.log(this.state.cardData)}</div> */}
+          {/* <div>{console.log(this.state.cardData)}</div> */}
+          <Grid container spacing={3} sx={{ mt: 2 }}>
             {this.state.cardData.map((item) => (
-              <div key={item?.id}>
+              <Grid
+                data-testid="card-num-form"
+                key={item.id}
+                sx={{ display: 'flex', justifyContent: 'space-between' }}
+                xs={12}
+                sm={6}
+                md={4}
+                lg={2}
+                item
+              >
                 <CardPage
                   newName={item.newName}
                   newSurName={item.newSurName}
@@ -337,9 +360,9 @@ export default class Form extends React.Component<IFormProps, IFormState> {
                   newPromotionNotification={item.newPromotionNotification}
                   newImage={item.newImage}
                 />
-              </div>
+              </Grid>
             ))}
-          </div>
+          </Grid>
         </Box>
       </form>
     );
