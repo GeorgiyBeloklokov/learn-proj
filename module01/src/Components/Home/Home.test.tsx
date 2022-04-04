@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import HomePage from './Home';
+import Home from './Home';
 
 test('test card items render', () => {
-  render(<HomePage />);
+  render(<Home />);
   const cards = screen.getAllByTestId('card-num');
   expect(cards.length).toBe(12);
 });

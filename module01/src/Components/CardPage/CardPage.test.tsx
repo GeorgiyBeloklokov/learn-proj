@@ -7,13 +7,13 @@ const surName = 'looo';
 const name = 'blabla';
 
 test('renders learn react link', () => {
-  render(<CardPage name={name} surName={surName} />);
+  render(<CardPage />);
   const element = screen.findAllByText(/props.image/i);
   expect(element).toBeTruthy();
 });
 
 test('renders component', () => {
-  render(<CardPage name={name} surName={surName} />);
+  render(<CardPage />);
   const card = screen.getByTestId('card');
   expect(card).toBeDefined();
 });

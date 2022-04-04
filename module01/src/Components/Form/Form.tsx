@@ -15,18 +15,18 @@ import { styled } from '@mui/material/styles';
 import CardPage from '../CardPage/CardPage';
 
 export interface IArrayCard {
-  id: number;
-  newName: string;
-  newSurName: string;
-  newDatePicker: string;
-  newCountry: string;
-  newAgreeCheckBox: boolean;
-  newGiftFirst: boolean;
-  newGiftSecond: boolean;
-  newGiftThird: boolean;
-  newMaleFemale: boolean;
-  newPromotionNotification: boolean;
-  newImage: File;
+  id?: number;
+  newName?: string | null;
+  newSurName?: string | null;
+  newDatePicker?: string | null;
+  newCountry?: string | null;
+  newAgreeCheckBox?: boolean;
+  newGiftFirst?: boolean;
+  newGiftSecond?: boolean;
+  newGiftThird?: boolean;
+  newMaleFemale?: boolean;
+  newPromotionNotification?: boolean;
+  newImage?: File | null;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -35,8 +35,8 @@ export interface IFormProps {}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IFormState {
   valuePicker: string | null;
-  valueSelect: string;
-  formData: string;
+  valueSelect: string | null;
+  formData: string | null;
   switchFirsDate: boolean;
   switchSecondDate: boolean;
   image: object;
@@ -321,10 +321,22 @@ export default class Form extends React.Component<IFormProps, IFormState> {
             </div>
           </div>
           <div>
-            <div>{console.log(this.state.cardData)}</div>
+            {/* <div>{console.log(this.state.cardData)}</div> */}
             {this.state.cardData.map((item) => (
               <div key={item?.id}>
-                <CardPage name={item.newName} surName={item.newSurName} />
+                <CardPage
+                  newName={item.newName}
+                  newSurName={item.newSurName}
+                  newDatePicker={item.newDatePicker}
+                  newCountry={item.newCountry}
+                  newAgreeCheckBox={item.newAgreeCheckBox}
+                  newGiftFirst={item.newGiftFirst}
+                  newGiftSecond={item.newGiftSecond}
+                  newGiftThird={item.newGiftThird}
+                  newMaleFemale={item.newMaleFemale}
+                  newPromotionNotification={item.newPromotionNotification}
+                  newImage={item.newImage}
+                />
               </div>
             ))}
           </div>
