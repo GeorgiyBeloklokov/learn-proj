@@ -14,7 +14,6 @@ import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import CardPage from '../CardPage/CardPage';
 import { Grid } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 export interface IArrayCard {
   id?: number;
@@ -56,8 +55,8 @@ export default class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
     this.state = {
-      valuePicker: null,
-      valueSelect: null,
+      valuePicker: '',
+      valueSelect: '',
       formData: '',
       switchFirsDate: false,
       switchSecondDate: false,
@@ -78,33 +77,31 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 
     const name = formData.get(`name`);
     console.log(`test name:`, name);
-    if (name === '') {
-      this.setState({ isErrorFieldName: true });
-      this.setState({ isFormValid: true });
+    if (!name) {
+      this.setState({ isErrorFieldName: true, isFormValid: true });
     }
 
     const surname = formData.get(`surname`);
     console.log(`test name:`, surname);
-    if (surname === '') {
-      this.setState({ isErrorFieldSurname: true });
-      this.setState({ isFormValid: true });
-    } else {
+    if (!surname) {
+      this.setState({ isErrorFieldSurname: true, isFormValid: true });
+    } /* else {
       this.setState({ isErrorFieldSurname: false });
-    }
+    } */
     const datePicker = formData.get(`datePicker`);
     console.log(`test IsDatePicker:`, datePicker);
-    if (datePicker === '') {
+    if (!datePicker) {
       this.setState({ isErrorFieldDatePicker: true });
-    } else {
+    } /* else {
       this.setState({ isErrorFieldDatePicker: false });
-    }
+    } */
     const country = formData.get(`country`);
     console.log(`test country:`, country);
-    if (country === '') {
+    if (!country) {
       this.setState({ isErrorFieldCountry: true });
-    } else {
+    } /* else {
       this.setState({ isErrorFieldCountry: false });
-    }
+    } */
     const agreeCheckBox = !!formData.get('agreeCheckBox');
     console.log(`test agreeCheckBox:`, agreeCheckBox);
     const giftFirst = !!formData.get(`giftFirst`);
@@ -117,19 +114,19 @@ export default class Form extends React.Component<IFormProps, IFormState> {
     console.log(`test male/female:`, maleFemale);
     const promotionNotification = !!formData.get(`promotionNotification`);
     console.log(`test promotionNotification:`, promotionNotification);
-    const image = formData.get(`image`);
+    const image = (formData.get(`image`) as File) || null;
     console.log(`test image:`, image);
-    if (name !== '' && surname !== '' && datePicker !== '' && country !== '') {
+    if (name && surname && datePicker && country) {
       this.setState((state) => {
         return {
           cardData: [
             ...state.cardData,
             {
               id: Date.now(),
-              newName: name,
-              newSurName: surname,
-              newDatePicker: datePicker,
-              newCountry: country,
+              newName: name as string,
+              newSurName: surname as string,
+              newDatePicker: datePicker as string,
+              newCountry: country as string,
               newAgreeCheckBox: agreeCheckBox,
               newGiftFirst: giftFirst,
               newGiftSecond: giftSecond,
@@ -139,6 +136,11 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               newImage: image,
             },
           ],
+          isErrorFieldName: false,
+          isErrorFieldSurname: false,
+          isFormValid: false,
+          isErrorFieldDatePicker: false,
+          isErrorFieldCountry: false,
         };
       });
       this.setState({ isSavedFormMessage: true });

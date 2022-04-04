@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IAppProps {}
@@ -20,7 +21,7 @@ export default class Error404 extends React.Component<IAppProps, IAppState> {
         <h1 style={{ color: 'red', fontSize: 100 }}>Error404</h1>
         <h3>Page Not Found</h3>
         <p>
-          <Button>Go Home</Button>
+          <Link to="/">Go Home</Link>
         </p>
       </div>
     );

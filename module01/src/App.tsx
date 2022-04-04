@@ -1,11 +1,14 @@
-import SearchAppBar from './Components/Header/Header';
-import AppRouter from './Components/ApiRouter';
+import Header from './Components/Header/Header';
+import AppRouter from './Components/AppRouter';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <SearchAppBar />
-      <AppRouter />
+      <BrowserRouter>
+        <Header />
+        <AppRouter />
+      </BrowserRouter>
     </div>
   );
 }

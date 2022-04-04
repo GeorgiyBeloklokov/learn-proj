@@ -103,11 +103,15 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
             </Typography>
             <Stack spacing={2} direction="row">
               {/* <Link to="/form">Form</Link> */}
-              {/* <Button color="inherit" variant="contained" component={Link} to={'/form'}>
+              <Button color="primary" variant="contained" component={Link} to={'/form'}>
                 Form
-              </Button> */}
-              <Button variant="contained">Contained</Button>
-              <Button variant="contained">Outlined</Button>
+              </Button>
+              <Button color="primary" variant="contained" component={Link} to={'/aboutus'}>
+                Form
+              </Button>
+              <Button variant="contained" disabled>
+                Contained
+              </Button>
             </Stack>
             <Search>
               <SearchIconWrapper>

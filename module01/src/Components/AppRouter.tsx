@@ -20,15 +20,13 @@ export default class AppRouter extends React.Component<IAppProps, IAppState> {
 
   public render() {
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/error404" element={<Error404 />} />
-          <Route path="/form" element={<Form />} />
-          <Route path="*" element={<Error404 />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/error404" element={<Error404 />} />
+        <Route path="/form" element={<Form />} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>
     );
   }
 }
