@@ -138,11 +138,6 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               newImage: image,
             },
           ],
-          /* isErrorFieldName: false,
-          isErrorFieldSurname: false,
-          isFormValid: false,
-          isErrorFieldDatePicker: false,
-          isErrorFieldCountry: false, */
         };
       });
       this.setState({ isSavedFormMessage: true });
@@ -162,7 +157,10 @@ export default class Form extends React.Component<IFormProps, IFormState> {
   public render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Box sx={{ mt: 5, ml: 2, '& .MuiTextField-root': { m: 2, width: '25ch' } }}>
+        <Box
+          data-testid="form-test"
+          sx={{ mt: 5, ml: 2, '& .MuiTextField-root': { m: 2, width: '25ch' } }}
+        >
           <div>
             {this.state.isErrorFieldName && <div style={{ color: 'red' }}>{this.state.error}</div>}
             <TextField

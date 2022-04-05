@@ -1,4 +1,5 @@
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
+import Box from '@mui/material/Box';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -17,13 +18,24 @@ export default class Error404 extends React.Component<IAppProps, IAppState> {
 
   public render() {
     return (
-      <div style={{ marginLeft: 550 }}>
-        <h1 style={{ color: 'red', fontSize: 100 }}>Error404</h1>
-        <h3>Page Not Found</h3>
-        <p>
-          <Link to="/">Go Home</Link>
-        </p>
-      </div>
+      <Box
+        data-testid="error404-test"
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          '& > :not(style)': {
+            m: 1,
+            width: 128,
+            height: 128,
+          },
+        }}
+      >
+        <div style={{ marginLeft: 550 }}>
+          <h1 style={{ color: 'red', fontSize: 100 }}>Error404</h1>
+          <h3>Page Not Found</h3>
+          <p>{/* <Link to="/">Go Home</Link> */}</p>
+        </div>
+      </Box>
     );
   }
 }
