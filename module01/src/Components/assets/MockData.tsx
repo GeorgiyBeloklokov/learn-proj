@@ -8,9 +8,8 @@ interface Provider {
 export const mockCardDB: Array<Provider> = [
   {
     id: 1,
-    newSurName:
-      'Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
+    newSurName: 'Lizards are ',
     image: 'https://www.russiadiscovery.ru/upload/files/files/Kavkazskie_gory.jpg',
-    newName: 'antoni',
+    newName: 'Antony',
   },
 ];

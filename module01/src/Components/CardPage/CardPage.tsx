@@ -16,48 +16,44 @@ export default class CardPage extends React.Component<IArrayCard> {
   }
   public render() {
     return (
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ mb: 7, maxWidth: 300 }}>
         <CardMedia
           data-testid="card"
           component="img"
           alt="green iguana"
           height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image="https://www.russiadiscovery.ru/upload/files/files/Kavkazskie_gory.jpg"
         />
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newName}
+          <Typography color="primary" gutterBottom variant="body2" component="div">
+            Name: {this.props.newName}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newSurName}
+          <Typography gutterBottom variant="body2" component="div">
+            Surname: {this.props.newSurName}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newDatePicker}
+          <Typography color="primary" gutterBottom variant="body2" component="div">
+            Date: {this.props.newDatePicker}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newCountry}
+          <Typography gutterBottom variant="body2" component="div">
+            Country: {this.props.newCountry}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newAgreeCheckBox
-              ? 'newAgreeCheckBox: order'
-              : 'newAgreeCheckBox: out of order'}
+          <Typography color="primary" gutterBottom variant="body2" component="div">
+            Agree :{this.props.newAgreeCheckBox ? ' in order' : 'out of order'}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newGiftFirst ? 'newGiftFirst: in order' : 'newGiftFirst: out of order'}
+          <Typography gutterBottom variant="body2" component="div">
+            First Gift: {this.props.newGiftFirst ? 'in order' : 'out of order'}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newGiftSecond ? 'newGiftSecond: in order' : 'newGiftSecond: out of order'}
+          <Typography color="primary" gutterBottom variant="body2" component="div">
+            Second Gift: {this.props.newGiftSecond ? 'in order' : 'out of order'}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newGiftThird ? 'newGiftThird: in order' : 'newGiftThird: out of order'}
+          <Typography gutterBottom variant="body2" component="div">
+            Third Gift: {this.props.newGiftThird ? 'in order' : 'out of order'}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newMaleFemale ? 'newMaleFemale: in order' : 'newMaleFemale: out of order'}
+          <Typography color="primary" gutterBottom variant="body2" component="div">
+            Gender: {this.props.newMaleFemale ? 'in order' : 'out of order'}
           </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {this.props.newPromotionNotification
-              ? 'newPromotionNotification: in order'
-              : 'newPromotionNotification: out of order'}
+          <Typography gutterBottom variant="body2" component="div">
+            Promotion: {this.props.newPromotionNotification ? 'in order' : 'out of order'}
           </Typography>
         </CardContent>
         <CardActions>

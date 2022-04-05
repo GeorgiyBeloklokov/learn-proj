@@ -9,6 +9,12 @@ test('renders component', () => {
 
 test('renders learn react link', () => {
   render(<Form />);
-  const element = screen.findAllByText(/Your Name../i);
-  expect(element).toBeTruthy();
+  const element = screen.getByLabelText(/Date input/i);
+  const buttonSubmit = screen.getByText('Submit form data');
+  const inputName = screen.getByPlaceholderText(/Your Name../i);
+  const inputSurName = screen.getByPlaceholderText(/Your Surname../i);
+  expect(buttonSubmit).toBeInTheDocument();
+  expect(inputName).toMatchSnapshot();
+  expect(inputSurName).toMatchSnapshot();
+  expect(element).toBeInTheDocument();
 });

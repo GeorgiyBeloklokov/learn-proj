@@ -17,7 +17,7 @@ export default class Home extends React.Component<IArrayCard> {
           <Grid
             data-testid="card-num"
             key={item.id}
-            sx={{ display: 'flex', justifyContent: 'space-between' }}
+            sx={{ ml: 4, mt: 3, display: 'flex', justifyContent: 'space-between' }}
             xs={12}
             sm={6}
             md={4}

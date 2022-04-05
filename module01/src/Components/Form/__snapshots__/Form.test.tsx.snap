@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders learn react link 1`] = `
+<input
+  aria-invalid="false"
+  class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+  id="outlined-required"
+  name="name"
+  placeholder="Your Name.."
+  type="name"
+  value=""
+/>
+`;
+
+exports[`renders learn react link 2`] = `
+<input
+  aria-invalid="false"
+  class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+  id="outlined-disabled"
+  name="surname"
+  placeholder="Your Surname.."
+  type="surname"
+  value=""
+/>
+`;
