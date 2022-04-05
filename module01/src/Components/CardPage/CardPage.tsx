@@ -6,8 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { IArrayCard } from '../Form/Form';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 
 export default class CardPage extends React.Component<IArrayCard> {
   constructor(props: IArrayCard) {
@@ -20,6 +18,7 @@ export default class CardPage extends React.Component<IArrayCard> {
     return (
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
+          data-testid="card"
           component="img"
           alt="green iguana"
           height="140"

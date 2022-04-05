@@ -102,12 +102,14 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
               RSSchool
             </Typography>
             <Stack spacing={2} direction="row">
-              {/* <Link to="/form">Form</Link> */}
+              <Button color="primary" variant="contained" component={Link} to={'/'}>
+                Home
+              </Button>
               <Button color="primary" variant="contained" component={Link} to={'/form'}>
                 Form
               </Button>
               <Button color="primary" variant="contained" component={Link} to={'/aboutus'}>
-                Form
+                About us
               </Button>
               <Button variant="contained" disabled>
                 Contained

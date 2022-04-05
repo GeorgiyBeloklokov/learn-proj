@@ -79,29 +79,31 @@ export default class Form extends React.Component<IFormProps, IFormState> {
     console.log(`test name:`, name);
     if (!name) {
       this.setState({ isErrorFieldName: true, isFormValid: true });
+    } else {
+      this.setState({ isErrorFieldName: false });
     }
 
     const surname = formData.get(`surname`);
     console.log(`test name:`, surname);
     if (!surname) {
       this.setState({ isErrorFieldSurname: true, isFormValid: true });
-    } /* else {
+    } else {
       this.setState({ isErrorFieldSurname: false });
-    } */
+    }
     const datePicker = formData.get(`datePicker`);
     console.log(`test IsDatePicker:`, datePicker);
     if (!datePicker) {
       this.setState({ isErrorFieldDatePicker: true });
-    } /* else {
+    } else {
       this.setState({ isErrorFieldDatePicker: false });
-    } */
+    }
     const country = formData.get(`country`);
     console.log(`test country:`, country);
     if (!country) {
       this.setState({ isErrorFieldCountry: true });
-    } /* else {
+    } else {
       this.setState({ isErrorFieldCountry: false });
-    } */
+    }
     const agreeCheckBox = !!formData.get('agreeCheckBox');
     console.log(`test agreeCheckBox:`, agreeCheckBox);
     const giftFirst = !!formData.get(`giftFirst`);
@@ -136,11 +138,11 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               newImage: image,
             },
           ],
-          isErrorFieldName: false,
+          /* isErrorFieldName: false,
           isErrorFieldSurname: false,
           isFormValid: false,
           isErrorFieldDatePicker: false,
-          isErrorFieldCountry: false,
+          isErrorFieldCountry: false, */
         };
       });
       this.setState({ isSavedFormMessage: true });
@@ -149,7 +151,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
       }, 2300);
       e.currentTarget.reset();
       this.setState({ valuePicker: null });
-      this.setState({ valueSelect: null });
+      this.setState({ valueSelect: '' });
     }
   };
 
