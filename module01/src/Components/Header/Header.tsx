@@ -58,6 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IHeaderProps {
   searchInputData: boolean;
+  setState: () => { searchInputData: boolean };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

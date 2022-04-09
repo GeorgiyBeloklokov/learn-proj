@@ -14,10 +14,11 @@ export default class Home extends React.Component<IHomeProps, IArrayCard> {
     super(props);
 
     this.state = {};
-  }
-  if(this.props.searchInputData) {
-    const data = await characterAPI.getCharacter();
-    console.log(`test data`, data);
+
+    if (this.props.searchInputData) {
+      const data = characterAPI.getCharacter();
+      console.log(`test data`, data);
+    }
   }
 
   public render() {
