@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { IArrayCard } from '../Form/Form';
+import { characterAPI } from '../ApiService/ApiService';
 
 export default class CardPage extends React.Component<IArrayCard> {
   constructor(props: IArrayCard) {
@@ -14,6 +15,11 @@ export default class CardPage extends React.Component<IArrayCard> {
       searchValue: '',
     };
   }
+
+  /*  async componentDidMount() {
+    const data = await characterAPI.getCharacter();
+    console.log(`test data`, data);
+  } */
   public render() {
     return (
       <Card sx={{ mb: 7, maxWidth: 300 }}>

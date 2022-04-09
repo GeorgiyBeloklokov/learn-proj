@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import { characterAPI } from '../ApiService/ApiService';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,7 +56,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IHeaderProps {}
+export interface IHeaderProps {
+  searchInputData: boolean;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IHeaderState {
@@ -77,6 +80,22 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   handleChange = (event: React.KeyboardEvent<HTMLInputElement> & { target: HTMLInputElement }) => {
     this.setState({ searchValue: event.target.value });
     localStorage.setItem('searchValue', event.target.value);
+  };
+
+  handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      this.handleSubmit();
+    }
+  };
+
+  handleSubmit = async () => {
+    const base: Array<string> = [];
+    base.push(this.state.searchValue);
+    const examples: Array<string> = ['character', 'Character'];
+    const isMatchWord = examples.some((el) => base.includes(el));
+    if (isMatchWord) {
+      this.props.setState({ searchInputData: true });
+    }
   };
 
   public render() {
@@ -125,6 +144,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
                 inputProps={{ 'aria-label': 'search' }}
                 value={this.state.searchValue}
                 onChange={this.handleChange}
+                onKeyDown={this.handleKeyPress}
               />
             </Search>
           </Toolbar>

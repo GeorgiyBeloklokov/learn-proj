@@ -28,6 +28,7 @@ export interface IArrayCard {
   newMaleFemale?: boolean;
   newPromotionNotification?: boolean;
   newImage?: File | null;
+  searchInputData?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
