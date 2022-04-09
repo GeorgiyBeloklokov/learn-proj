@@ -14,7 +14,8 @@ export type CharacterResponseType = {
     url: string;
   };
   image: string;
-  episode: Array<string>;
+  /* episode: Array<string>; */
   url: string;
   created: string;
+  searchInputData?: boolean;
 };

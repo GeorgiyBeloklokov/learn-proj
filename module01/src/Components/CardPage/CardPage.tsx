@@ -5,61 +5,117 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { IArrayCard } from '../Form/Form';
-import { characterAPI } from '../ApiService/ApiService';
+import { CharacterResponseType } from '../../Types/Types';
+import ModalOne from '../Modal/Modal';
 
-export default class CardPage extends React.Component<IArrayCard> {
-  constructor(props: IArrayCard) {
+export default class CardPage extends React.Component<CharacterResponseType> {
+  constructor(props: CharacterResponseType) {
     super(props);
     this.state = {
       searchValue: '',
+      open: false,
     };
+    this.setState = this.setState.bind(this);
   }
 
-  /*  async componentDidMount() {
-    const data = await characterAPI.getCharacter();
-    console.log(`test data`, data);
-  } */
   public render() {
     return (
-      <Card sx={{ mb: 7, maxWidth: 300 }}>
+      <Card sx={{ mb: 7, maxWidth: 300, maxHeight: 250 }}>
+        <ModalOne setState={this.setState} open={this.state.open} />
         <CardMedia
           data-testid="card"
           component="img"
           alt="green iguana"
-          height="140"
-          image="https://www.russiadiscovery.ru/upload/files/files/Kavkazskie_gory.jpg"
+          height="180"
+          image={this.props.image}
         />
+        <Button onClick={() => this.setState({ open: true })}>Show more...</Button>
         <CardContent>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Name: {this.props.newName}
+            Id: {this.props.id}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Surname: {this.props.newSurName}
+            Name: {this.props.name}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Date: {this.props.newDatePicker}
+            Status: {this.props.status}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Country: {this.props.newCountry}
-          </Typography>
-          <Typography color="primary" gutterBottom variant="body2" component="div">
-            Agree :{this.props.newAgreeCheckBox ? ' in order' : 'out of order'}
+            Species: {this.props.species}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            First Gift: {this.props.newGiftFirst ? 'in order' : 'out of order'}
+            Gender: {this.props.gender}
           </Typography>
-          <Typography color="primary" gutterBottom variant="body2" component="div">
-            Second Gift: {this.props.newGiftSecond ? 'in order' : 'out of order'}
+          <Typography
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+            }}
+            color="primary"
+            gutterBottom
+            variant="body2"
+            component="div"
+          >
+            Origin Name: {this.props.origin.name}
+          </Typography>
+          <Typography
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+            }}
+            color="primary"
+            gutterBottom
+            variant="body2"
+            component="div"
+          >
+            Origin URL: {this.props.origin.url}
+          </Typography>
+          <Typography
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+            }}
+            gutterBottom
+            variant="body2"
+            component="div"
+          >
+            Location Name: {this.props.location.name}
+          </Typography>
+          <Typography
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+            }}
+            gutterBottom
+            variant="body2"
+            component="div"
+          >
+            Location URL: {this.props.location.url}
+          </Typography>
+          <Typography
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+            }}
+            color="primary"
+            gutterBottom
+            variant="body2"
+            component="div"
+          >
+            Url: {this.props.url}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Third Gift: {this.props.newGiftThird ? 'in order' : 'out of order'}
-          </Typography>
-          <Typography color="primary" gutterBottom variant="body2" component="div">
-            Gender: {this.props.newMaleFemale ? 'in order' : 'out of order'}
-          </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Promotion: {this.props.newPromotionNotification ? 'in order' : 'out of order'}
+            Created: {this.props.created}
           </Typography>
         </CardContent>
         <CardActions>

@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { characterAPI } from '../ApiService/ApiService';
+import { IAppState } from '../../App';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,8 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IHeaderProps {
-  searchInputData: boolean;
-  setState: () => { searchInputData: boolean };
+  setState: React.Dispatch<React.SetStateAction<IAppState>>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -74,7 +74,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
     };
   }
   componentDidMount() {
-    const isData = localStorage.getItem('searchValue') || 'no data';
+    const isData = localStorage.getItem('searchValue') || 'Search..';
     this.setState({ searchValue: isData });
   }
 

@@ -11,8 +11,13 @@ const instance = axios.create({
 });
 
 export const characterAPI = {
+  getDefaultCharacter() {
+    return instance.get<CharacterResponseType>(`/character/1,2,3,4,5`).then((response) => {
+      return response.data;
+    });
+  },
   getCharacter() {
-    return instance.get<CharacterResponseType>(`/character/1`).then((response) => {
+    return instance.get<CharacterResponseType>(`/character/6,7,8,9,10`).then((response) => {
       return response.data;
     });
   },
