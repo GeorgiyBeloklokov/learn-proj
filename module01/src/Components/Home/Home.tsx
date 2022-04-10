@@ -92,7 +92,6 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
         )}
         {this.state.newData.map((item) => (
           <Grid
-            data-testid="card-num"
             key={item.id}
             sx={{ ml: 4, mt: 10, display: 'flex', justifyContent: 'space-between' }}
             xs={12}
@@ -102,6 +101,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             item
           >
             <CardPage
+              data-testid="card-num"
               key={item.id}
               id={item.id}
               name={item.name}
