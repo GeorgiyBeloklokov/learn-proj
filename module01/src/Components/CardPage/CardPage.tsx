@@ -8,11 +8,13 @@ import Typography from '@mui/material/Typography';
 import { CharacterResponseType } from '../../Types/Types';
 import ModalOne from '../Modal/Modal';
 
-export default class CardPage extends React.Component<CharacterResponseType> {
+export interface ICardPageState {
+  open: boolean;
+}
+export default class CardPage extends React.Component<CharacterResponseType, ICardPageState> {
   constructor(props: CharacterResponseType) {
     super(props);
     this.state = {
-      searchValue: '',
       open: false,
     };
     this.setState = this.setState.bind(this);
@@ -20,8 +22,22 @@ export default class CardPage extends React.Component<CharacterResponseType> {
 
   public render() {
     return (
-      <Card sx={{ mb: 7, maxWidth: 300, maxHeight: 250 }}>
-        <ModalOne setState={this.setState} open={this.state.open} />
+      <Card sx={{ mb: 7, maxWidth: 300, maxHeight: 230 }}>
+        <ModalOne
+          image={this.props.image}
+          setState={this.setState}
+          open={this.state.open}
+          id={this.props.id}
+          name={this.props.name}
+          status={this.props.status}
+          type={this.props.type}
+          gender={this.props.gender}
+          species={this.props.species}
+          origin={this.props.origin}
+          location={this.props.location}
+          url={this.props.url}
+          created={this.props.created}
+        />
         <CardMedia
           data-testid="card"
           component="img"
@@ -42,6 +58,9 @@ export default class CardPage extends React.Component<CharacterResponseType> {
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
             Species: {this.props.species}
+          </Typography>
+          <Typography gutterBottom variant="body2" component="div">
+            Type: {this.props.type}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
             Gender: {this.props.gender}

@@ -2,23 +2,13 @@ import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { IAppState } from '../../App';
+import Button from '@mui/material/Button';
+import CardMedia from '@mui/material/CardMedia';
+import { CharacterResponseType } from '../../Types/Types';
 
-export interface IModalProps {
-  open: boolean;
-  onClose: () => void;
-  closeAfterTransition: boolean;
-  BackdropComponent: boolean;
-  setState: React.Dispatch<React.SetStateAction<IAppState>>;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IModalState {}
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -29,8 +19,8 @@ const style = {
   p: 4,
 };
 
-export default class ModalOne extends React.Component<IModalProps, IModalState> {
-  constructor(props: IModalProps) {
+export default class ModalOne extends React.Component<CharacterResponseType> {
+  constructor(props: CharacterResponseType) {
     super(props);
 
     this.state = {};
@@ -39,11 +29,10 @@ export default class ModalOne extends React.Component<IModalProps, IModalState> 
   public render() {
     return (
       <div>
-        {/* <Button onClick={() => this.setState({ open: true })}>Open modal</Button> */}
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
-          open={this.state.open}
+          open={this.props.open}
           onClose={() => this.props.setState({ open: false })}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -51,16 +40,110 @@ export default class ModalOne extends React.Component<IModalProps, IModalState> 
             timeout: 500,
           }}
         >
-          <Fade in={open}>
-            <Box sx={style}>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
-                Text in a modal
-              </Typography>
-              <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </Typography>
-            </Box>
-          </Fade>
+          <Box sx={style}>
+            <Button
+              sx={{ position: 'absolute', top: '1%', left: '88%' }}
+              onClick={() => this.props.setState({ open: false })}
+            >
+              X
+            </Button>
+            <CardMedia
+              data-testid="card"
+              component="img"
+              alt="image"
+              height="280"
+              image={this.props.image}
+            />
+            <Typography color="primary" gutterBottom variant="body2" component="div">
+              Id: {this.props.id}
+            </Typography>
+            <Typography gutterBottom variant="body2" component="div">
+              Name: {this.props.name}
+            </Typography>
+            <Typography color="primary" gutterBottom variant="body2" component="div">
+              Status: {this.props.status}
+            </Typography>
+            <Typography gutterBottom variant="body2" component="div">
+              Species: {this.props.species}
+            </Typography>
+            <Typography gutterBottom variant="body2" component="div">
+              Type: {this.props.type}
+            </Typography>
+            <Typography gutterBottom variant="body2" component="div">
+              Gender: {this.props.gender}
+            </Typography>
+            <Typography
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+              }}
+              color="primary"
+              gutterBottom
+              variant="body2"
+              component="div"
+            >
+              Origin Name: {this.props.origin.name}
+            </Typography>
+            <Typography
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+              }}
+              color="primary"
+              gutterBottom
+              variant="body2"
+              component="div"
+            >
+              Origin URL: {this.props.origin.url}
+            </Typography>
+            <Typography
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+              }}
+              gutterBottom
+              variant="body2"
+              component="div"
+            >
+              Location Name: {this.props.location.name}
+            </Typography>
+            <Typography
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+              }}
+              gutterBottom
+              variant="body2"
+              component="div"
+            >
+              Location URL: {this.props.location.url}
+            </Typography>
+            <Typography
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+              }}
+              color="primary"
+              gutterBottom
+              variant="body2"
+              component="div"
+            >
+              Url: {this.props.url}
+            </Typography>
+            <Typography gutterBottom variant="body2" component="div">
+              Created: {this.props.created}
+            </Typography>
+          </Box>
         </Modal>
       </div>
     );

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import { Grid } from '@mui/material';
 /* import { mockCardDB } from '../assets/MockData'; */
-import CardPage from '../CardPage/CardPage';
+import CardPage, { ICardPageState } from '../CardPage/CardPage';
 import { CharacterResponseType } from '../../Types/Types';
 import { IAppState } from '../../App';
 import { characterAPI } from '../ApiService/ApiService';
@@ -53,6 +53,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
     this.data();
     return (
       <Grid container spacing={3}>
+        {console.log(`test newData;;;;;`, this.state.newData)}
         {this.state.newData.map((item) => (
           <Grid
             data-testid="card-num"
@@ -77,6 +78,10 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
               location={item.location}
               url={item.url}
               created={item.created}
+              setState={function (value: SetStateAction<ICardPageState>): void {
+                throw new Error('Function not implemented.');
+              }}
+              open={false}
             />
           </Grid>
         ))}
