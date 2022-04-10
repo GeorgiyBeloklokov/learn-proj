@@ -4,6 +4,8 @@ import CardPage from '../CardPage/CardPage';
 import { CharacterResponseType } from '../../Types/Types';
 import { IAppState } from '../../App';
 import { characterAPI } from '../ApiService/ApiService';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export interface IHomeProps {
   setState: React.Dispatch<React.SetStateAction<IAppState>>;
@@ -11,6 +13,8 @@ export interface IHomeProps {
 }
 export interface IHomeState {
   newData: Array<CharacterResponseType>;
+  error: boolean;
+  loading: boolean;
 }
 
 export default class Home extends React.Component<IHomeProps, IHomeState> {
@@ -19,29 +23,41 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
 
     this.state = {
       newData: [],
+      error: false,
+      loading: true,
     };
   }
 
   async componentDidMount() {
-    const res = await characterAPI.getDefaultCharacter();
-    /* console.log(`test data default`, res); */
-    this.setState((state) => {
-      return {
-        newData: [...state.newData, ...res],
-      };
-    });
+    try {
+      const res = await characterAPI.getDefaultCharacter();
+      this.setState((state) => {
+        return {
+          newData: [...state.newData, ...res],
+          loading: false,
+        };
+      });
+    } catch (error) {
+      this.setState({ error: true, loading: true });
+    }
   }
 
   data = async () => {
-    if (this.props.searchInputData) {
-      const res = await characterAPI.getCharacter();
-      /* console.log(`test data`, res); */
+    try {
+      if (this.props.searchInputData) {
+        const res = await characterAPI.getCharacter();
+        /* console.log(`test data`, res); */
+        this.props.setState({ searchInputData: false });
+        this.setState((state) => {
+          return {
+            newData: [...res, ...state.newData],
+            loading: false,
+          };
+        });
+      }
+    } catch (error) {
       this.props.setState({ searchInputData: false });
-      this.setState((state) => {
-        return {
-          newData: [...res, ...state.newData],
-        };
-      });
+      this.setState({ error: true, loading: true });
     }
   };
 
@@ -51,18 +67,34 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
       <Grid container spacing={3}>
         <Typography
           sx={{ position: 'absolute', ml: 95, mt: 3 }}
-          color="error"
+          color="primary"
           gutterBottom
           variant="h6"
           component="div"
         >
           Enter word &quot;Character&quot; in Search and press &quot;Enter&quot;
         </Typography>
+        {this.state.loading && (
+          <>
+            <Box sx={{ display: 'flex', position: 'absolute', ml: 45, mt: 5 }}>
+              <CircularProgress />
+            </Box>
+            <Typography
+              sx={{ position: 'absolute', ml: 55, mt: 4 }}
+              color="error"
+              gutterBottom
+              variant="h4"
+              component="div"
+            >
+              Some error ocurred
+            </Typography>
+          </>
+        )}
         {this.state.newData.map((item) => (
           <Grid
             data-testid="card-num"
             key={item.id}
-            sx={{ ml: 4, mt: 5, display: 'flex', justifyContent: 'space-between' }}
+            sx={{ ml: 4, mt: 10, display: 'flex', justifyContent: 'space-between' }}
             xs={12}
             sm={6}
             md={4}
