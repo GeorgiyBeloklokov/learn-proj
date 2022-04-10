@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CharacterResponseType } from '../../Types/Types';
-import ModalOne from '../Modal/Modal';
+import ModalFirst from '../ModalFirst/ModalFirst';
 
 export interface ICardPageState {
   open: boolean;
@@ -23,7 +23,7 @@ export default class CardPage extends React.Component<CharacterResponseType, ICa
   public render() {
     return (
       <Card sx={{ mb: 7, maxWidth: 300, maxHeight: 230 }}>
-        <ModalOne
+        <ModalFirst
           image={this.props.image}
           setState={this.setState}
           open={this.state.open}

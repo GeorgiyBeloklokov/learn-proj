@@ -19,7 +19,7 @@ const style = {
   p: 4,
 };
 
-export default class ModalOne extends React.Component<CharacterResponseType> {
+export default class ModalFirst extends React.Component<CharacterResponseType> {
   constructor(props: CharacterResponseType) {
     super(props);
 
@@ -40,20 +40,14 @@ export default class ModalOne extends React.Component<CharacterResponseType> {
             timeout: 500,
           }}
         >
-          <Box sx={style}>
+          <Box data-testid="modal-first" sx={style}>
             <Button
               sx={{ position: 'absolute', top: '1%', left: '88%' }}
               onClick={() => this.props.setState({ open: false })}
             >
               X
             </Button>
-            <CardMedia
-              data-testid="card"
-              component="img"
-              alt="image"
-              height="280"
-              image={this.props.image}
-            />
+            <CardMedia component="img" alt="image" height="280" image={this.props.image} />
             <Typography color="primary" gutterBottom variant="body2" component="div">
               Id: {this.props.id}
             </Typography>

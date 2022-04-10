@@ -1,12 +1,10 @@
-import React, { SetStateAction } from 'react';
-import { Grid } from '@mui/material';
-/* import { mockCardDB } from '../assets/MockData'; */
-import CardPage, { ICardPageState } from '../CardPage/CardPage';
+import React from 'react';
+import { Grid, Typography } from '@mui/material';
+import CardPage from '../CardPage/CardPage';
 import { CharacterResponseType } from '../../Types/Types';
 import { IAppState } from '../../App';
 import { characterAPI } from '../ApiService/ApiService';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IHomeProps {
   setState: React.Dispatch<React.SetStateAction<IAppState>>;
   searchInputData: boolean;
@@ -24,27 +22,25 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
     };
   }
 
-  componentDidMount() {
-    characterAPI.getDefaultCharacter().then((res) => {
-      console.log(`test data default`, res);
-      this.setState((state) => {
-        return {
-          newData: [...state.newData, ...res],
-        };
-      });
+  async componentDidMount() {
+    const res = await characterAPI.getDefaultCharacter();
+    /* console.log(`test data default`, res); */
+    this.setState((state) => {
+      return {
+        newData: [...state.newData, ...res],
+      };
     });
   }
 
   data = async () => {
     if (this.props.searchInputData) {
-      characterAPI.getCharacter().then((res) => {
-        console.log(`test data`, res);
-        this.props.setState({ searchInputData: false });
-        this.setState((state) => {
-          return {
-            newData: [...res, ...state.newData],
-          };
-        });
+      const res = await characterAPI.getCharacter();
+      /* console.log(`test data`, res); */
+      this.props.setState({ searchInputData: false });
+      this.setState((state) => {
+        return {
+          newData: [...res, ...state.newData],
+        };
       });
     }
   };
@@ -53,12 +49,20 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
     this.data();
     return (
       <Grid container spacing={3}>
-        {console.log(`test newData;;;;;`, this.state.newData)}
+        <Typography
+          sx={{ position: 'absolute', ml: 95, mt: 3 }}
+          color="error"
+          gutterBottom
+          variant="h6"
+          component="div"
+        >
+          Enter word &quot;Character&quot; in Search and press &quot;Enter&quot;
+        </Typography>
         {this.state.newData.map((item) => (
           <Grid
             data-testid="card-num"
             key={item.id}
-            sx={{ ml: 4, mt: 3, display: 'flex', justifyContent: 'space-between' }}
+            sx={{ ml: 4, mt: 5, display: 'flex', justifyContent: 'space-between' }}
             xs={12}
             sm={6}
             md={4}
@@ -78,8 +82,8 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
               location={item.location}
               url={item.url}
               created={item.created}
-              setState={function (value: SetStateAction<ICardPageState>): void {
-                throw new Error('Function not implemented.');
+              setState={function (): void {
+                ('Function not implemented.');
               }}
               open={false}
             />
