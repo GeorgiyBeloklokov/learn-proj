@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 
 export interface IHomeProps {
   setState: React.Dispatch<React.SetStateAction<IAppState>>;
-  searchInputData: boolean;
+  isSearchInputData: boolean;
 }
 export interface IHomeState {
   newData: Array<CharacterResponseType>;
@@ -42,12 +42,12 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
     }
   }
 
-  data = async () => {
+  async componentDidUpdate() {
     try {
-      if (this.props.searchInputData) {
+      if (this.props.isSearchInputData) {
         const res = await characterAPI.getCharacter();
-        /* console.log(`test data`, res); */
-        this.props.setState({ searchInputData: false });
+
+        this.props.setState({ isSearchInputData: false });
         this.setState((state) => {
           return {
             newData: [...res, ...state.newData],
@@ -56,13 +56,12 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
         });
       }
     } catch (error) {
-      this.props.setState({ searchInputData: false });
-      this.setState({ error: true, loading: true });
+      this.props.setState({ isSearchInputData: false });
+      /* this.setState({ error: true, loading: true }); */
     }
-  };
+  }
 
   public render() {
-    this.data();
     return (
       <Grid container spacing={3}>
         <Typography
@@ -101,7 +100,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             item
           >
             <CardPage
-              data-testid="card-num"
+              data-testid="cardNum"
               key={item.id}
               id={item.id}
               name={item.name}

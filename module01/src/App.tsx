@@ -5,13 +5,12 @@ import Form from './Components/Form/Form';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Home from './Components/Home/Home';
 import * as React from 'react';
-import CardForm from './Components/CardForm/CardForm';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IAppProps {}
 
 export interface IAppState {
-  searchInputData: boolean;
+  isSearchInputData: boolean;
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
@@ -19,7 +18,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
     super(props);
     this.setState = this.setState.bind(this);
     this.state = {
-      searchInputData: false,
+      isSearchInputData: false,
     };
   }
 
@@ -30,7 +29,9 @@ export default class App extends React.Component<IAppProps, IAppState> {
         <Routes>
           <Route
             path="/"
-            element={<Home setState={this.setState} searchInputData={this.state.searchInputData} />}
+            element={
+              <Home setState={this.setState} isSearchInputData={this.state.isSearchInputData} />
+            }
           />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/form" element={<Form />} />

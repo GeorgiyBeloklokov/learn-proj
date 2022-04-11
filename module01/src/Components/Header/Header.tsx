@@ -11,7 +11,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import { characterAPI } from '../ApiService/ApiService';
 import { IAppState } from '../../App';
 
 const Search = styled('div')(({ theme }) => ({
@@ -95,7 +94,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
     const examples: Array<string> = ['character', 'Character'];
     const isMatchWord = examples.some((el) => base.includes(el));
     if (isMatchWord) {
-      this.props.setState({ searchInputData: true });
+      this.props.setState({ isSearchInputData: true });
     }
   };
 
