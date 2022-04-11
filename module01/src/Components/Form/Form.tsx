@@ -12,8 +12,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
-import CardPage from '../CardPage/CardPage';
 import { Grid } from '@mui/material';
+import CardForm from '../CardForm/CardForm';
 
 export interface IArrayCard {
   id?: number;
@@ -28,6 +28,7 @@ export interface IArrayCard {
   newMaleFemale?: boolean;
   newPromotionNotification?: boolean;
   newImage?: File | null;
+  searchInputData?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -349,7 +350,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
                 lg={2}
                 item
               >
-                <CardPage
+                <CardForm
                   newName={item.newName}
                   newSurName={item.newSurName}
                   newDatePicker={item.newDatePicker}

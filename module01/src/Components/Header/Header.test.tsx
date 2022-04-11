@@ -1,16 +1,28 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, getByTestId, render } from '@testing-library/react';
 import Header from './Header';
 
 it(' render correctly', () => {
-  const { queryByTestId, getByPlaceholderText } = render(<Header />);
+  const { getByTestId, getByPlaceholderText } = render(
+    <Header
+      setState={function (): void {
+        ('Function not implemented.');
+      }}
+    />
+  );
 
-  expect(queryByTestId('search')).toBeTruthy();
+  expect(getByTestId('search')).toBeTruthy();
   expect(getByPlaceholderText('Search…')).toBeTruthy();
 });
 
 describe('input value', () => {
   it('update on change', () => {
-    const { getByPlaceholderText } = render(<Header />);
+    const { getByPlaceholderText } = render(
+      <Header
+        setState={function (): void {
+          ('Function not implemented.');
+        }}
+      />
+    );
     const searchInput = getByPlaceholderText('Search…') as HTMLInputElement;
     fireEvent.change(searchInput, { target: { value: 'test' } });
     expect(searchInput.value).toBe('test');
