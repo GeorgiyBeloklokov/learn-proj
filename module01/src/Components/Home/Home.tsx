@@ -6,6 +6,7 @@ import { IAppState } from '../../App';
 import { characterAPI } from '../ApiService/ApiService';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 
 export interface IHomeProps {
   setState: React.Dispatch<React.SetStateAction<IAppState>>;
@@ -30,10 +31,10 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
 
   async componentDidMount() {
     try {
-      const res = await characterAPI.getDefaultCharacter();
+      const res = await characterAPI.getDefaultCharacter(); // for test:  const res = await axios.get('response');
       this.setState((state) => {
         return {
-          newData: [...state.newData, ...res],
+          newData: [...state.newData, ...res], // for test: newData: [...state.newData, ...res.data],
           loading: false,
         };
       });
@@ -91,6 +92,7 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
         )}
         {this.state.newData.map((item) => (
           <Grid
+            /* data-testid="card-home" */
             key={item.id}
             sx={{ ml: 4, mt: 10, display: 'flex', justifyContent: 'space-between' }}
             xs={12}
@@ -100,7 +102,6 @@ export default class Home extends React.Component<IHomeProps, IHomeState> {
             item
           >
             <CardPage
-              data-testid="cardNum"
               key={item.id}
               id={item.id}
               name={item.name}
