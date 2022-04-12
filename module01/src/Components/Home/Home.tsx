@@ -22,31 +22,21 @@ const Home: FC<IHomeProps> = (props) => {
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
-    secondFetchCards();
     fetchCards();
-  }, [props.isSearchInputData]);
+  }, []);
   async function fetchCards() {
     try {
-      const res = await characterAPI.getDefaultCharacter(); // for test:  const res = await axios.get('response');
-      setAllCardsData([...allCardsData, ...res]); // for test: newData: [...state.newData, ...res.data],
-      setIsLoading(false);
-      console.log(`test1 isSearchInputData:`, props.isSearchInputData);
-      /* if (props.isSearchInputData) {
+      if (props.isSearchInputData) {
         const res = await characterAPI.getCharacter();
         props.setState({ isSearchInputData: false });
         setAllCardsData([...res, ...allCardsData]);
-      } */
+      }
+      const res = await characterAPI.getDefaultCharacter(); // for test:  const res = await axios.get('response');
+      setAllCardsData([...allCardsData, ...res]); // for test: newData: [...state.newData, ...res.data],
+      setIsLoading(false);
+      console.log(`test isSearchInputData:`, props.isSearchInputData);
     } catch (error) {
       setIsError(true);
-    }
-  }
-
-  async function secondFetchCards() {
-    console.log(`test2 isSearchInputData:`, props.isSearchInputData);
-    if (props.isSearchInputData) {
-      const res = await characterAPI.getCharacter();
-      props.setState({ isSearchInputData: false });
-      setAllCardsData([...res, ...allCardsData]);
     }
   }
 
