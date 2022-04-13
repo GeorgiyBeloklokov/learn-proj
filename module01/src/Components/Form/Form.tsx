@@ -14,6 +14,18 @@ import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import CardForm from '../CardForm/CardForm';
+import { Path, useForm, UseFormRegister, SubmitHandler } from 'react-hook-form';
+
+interface IFormValues {
+  'First Name': string;
+  Age: number;
+}
+
+type InputProps = {
+  label: Path<IFormValues>;
+  register: UseFormRegister<IFormValues>;
+  required: boolean;
+};
 
 export interface IArrayCard {
   id?: number;
@@ -106,17 +118,11 @@ export default class Form extends React.Component<IFormProps, IFormState> {
       this.setState({ isErrorFieldCountry: false });
     }
     const agreeCheckBox = !!formData.get('agreeCheckBox');
-    console.log(`test agreeCheckBox:`, agreeCheckBox);
     const giftFirst = !!formData.get(`giftFirst`);
-    console.log(`test giftFirst:`, giftFirst);
     const giftSecond = !!formData.get(`giftSecond`);
-    console.log(`test giftSecond:`, giftSecond);
     const giftThird = !!formData.get(`giftThird`);
-    console.log(`test giftThird:`, giftThird);
     const maleFemale = !!formData.get(`male/female`);
-    console.log(`test male/female:`, maleFemale);
     const promotionNotification = !!formData.get(`promotionNotification`);
-    console.log(`test promotionNotification:`, promotionNotification);
     const image = (formData.get(`image`) as File) || null;
     console.log(`test image:`, image);
     if (name && surname && datePicker && country) {

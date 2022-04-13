@@ -23,18 +23,20 @@ const Home: FC<IHomeProps> = (props) => {
 
   useEffect(() => {
     fetchCards();
-  }, []);
+  }, [props.isSearchInputData]);
+
   async function fetchCards() {
     try {
       if (props.isSearchInputData) {
         const res = await characterAPI.getCharacter();
-        props.setState({ isSearchInputData: false });
         setAllCardsData([...res, ...allCardsData]);
+      } else {
+        const res = await characterAPI.getDefaultCharacter(); // for test:  const res = await axios.get('response');
+        setAllCardsData([...allCardsData, ...res]); // for test: newData: [...state.newData, ...res.data],
+        setIsLoading(false);
+        props.setState({ isSearchInputData: false });
+        console.log(`test isSearchInputData:`, props.isSearchInputData);
       }
-      const res = await characterAPI.getDefaultCharacter(); // for test:  const res = await axios.get('response');
-      setAllCardsData([...allCardsData, ...res]); // for test: newData: [...state.newData, ...res.data],
-      setIsLoading(false);
-      console.log(`test isSearchInputData:`, props.isSearchInputData);
     } catch (error) {
       setIsError(true);
     }
