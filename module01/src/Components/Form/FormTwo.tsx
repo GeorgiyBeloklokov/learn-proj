@@ -16,6 +16,19 @@ import { Grid } from '@mui/material';
 import CardForm from '../CardForm/CardForm';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
+const CheckBoxes = [
+  {
+    name: 'agreeCheckBox',
+    required: 'Please agree to data processing',
+    label: 'Agree to data processing',
+  },
+  {
+    name: 'giftFirst',
+    required: 'Please agree to data processing',
+    label: 'Agree to someone gift',
+  },
+];
+
 export interface IHomeProps {
   setState: React.Dispatch<React.SetStateAction<IAppState>>;
   isSearchInputData: boolean;
@@ -32,6 +45,12 @@ interface IFormInput {
   name: string;
   surname: string;
   country: string;
+  agreeCheckBox: boolean;
+  giftFirst: boolean;
+  giftSecond: boolean;
+  giftThird: boolean;
+  maleFemale: boolean;
+  promotionNotification: boolean;
 }
 
 /* Input = styled('input')({
@@ -54,6 +73,9 @@ const Form: FC<IHomeProps> = (props) => {
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
     setState([data]);
   };
+  const Input = styled('input')({
+    display: 'none',
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -133,82 +155,41 @@ const Form: FC<IHomeProps> = (props) => {
             />
             <FormHelperText>{errors.country?.message}</FormHelperText>
           </FormControl>
-          {/* <FormGroup>
+          <FormGroup>
+            <FormControl error={Boolean(errors.agreeCheckBox)}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    {...register('agreeCheckBox', { required: 'Please agree to data processing' })}
+                    name="agreeCheckBox"
+                  />
+                }
+                label="Agree to data processing"
+              />
+              <FormHelperText>{errors.agreeCheckBox?.message}</FormHelperText>
+            </FormControl>
             <FormControlLabel
-              control={
-                <Checkbox
-                  name="agreeCheckBox"
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      this.setState({ isFormValid: true });
-                    }
-                  }}
-                />
-              }
-              label="Agree to data processing"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      this.setState({ isFormValid: true });
-                    }
-                  }}
-                  name="giftFirst"
-                />
-              }
+              control={<Checkbox {...register('giftFirst')} name="giftFirst" />}
               label="Gift first"
             />
             <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      this.setState({ isFormValid: true });
-                    }
-                  }}
-                  name="giftSecond"
-                />
-              }
+              control={<Checkbox {...register('giftSecond')} name="giftSecond" />}
               label="Gift second"
             />
             <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      this.setState({ isFormValid: true });
-                    }
-                  }}
-                  name="giftThird"
-                />
-              }
+              control={<Checkbox {...register('giftThird')} name="giftThird" />}
               label="Gift third"
             />
           </FormGroup>
           <FormControlLabel
-            control={
-              <Switch
-                onChange={(e) => {
-                  if (e.target.value) {
-                    this.setState({ isFormValid: true });
-                  }
-                }}
-                name="male/female"
-                defaultChecked
-              />
-            }
+            control={<Switch {...register('maleFemale')} name="maleFemale" />}
             label="Male/Female"
           />
           <FormControlLabel
             control={
               <Switch
-                onChange={(e) => {
-                  if (e.target.value) {
-                    this.setState({ isFormValid: true });
-                  }
-                }}
+                {...register('promotionNotification')}
+                defaultChecked
                 name="promotionNotification"
               />
             }
@@ -217,22 +198,11 @@ const Form: FC<IHomeProps> = (props) => {
         </div>
         <div>
           <label htmlFor="contained-button-file">
-            <this.Input
-              onChange={(e) => {
-                if (e.target.value) {
-                  this.setState({ isFormValid: true });
-                }
-              }}
-              accept="image/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-              name="image"
-            />
+            <Input accept="image/*" id="contained-button-file" multiple type="file" name="image" />
             <Button sx={{ mt: 3 }} variant="contained" component="span">
               Upload profile picture
             </Button>
-          </label> */}
+          </label>
           <div>
             <Button
               /* disabled={!this.state.isFormValid} */
