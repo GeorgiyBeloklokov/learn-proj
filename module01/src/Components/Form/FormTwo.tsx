@@ -28,8 +28,8 @@ export interface IHomeState {
 
 interface IFormInput {
   muiDatePicker: Date | null;
-  lastName: string;
-  firstName: string;
+  name: string;
+  surname: string;
 }
 
 /* Input = styled('input')({
@@ -42,9 +42,10 @@ const Form: FC<IHomeProps> = (props) => {
   const [state, setState] = useState<IFormInput[]>([]);
 
   const { control, register, handleSubmit } = useForm<IFormInput>();
+  console.log(state);
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    setState([data]);
   };
 
   return (
@@ -56,7 +57,7 @@ const Form: FC<IHomeProps> = (props) => {
         <div>
           <TextField
             /* onFocus={() => this.setState({ isFormValid: true })} */
-            {...register('firstName', { required: true, maxLength: 20 })}
+            {...register('name', { required: true, maxLength: 20 })}
             type="name"
             name="name"
             id="outlined-required"
@@ -64,7 +65,7 @@ const Form: FC<IHomeProps> = (props) => {
             placeholder="Your Name.."
           />
           <TextField
-            {...register('lastName', { required: true, pattern: /^[A-Za-z]+$/i })}
+            {...register('surname', { required: true, pattern: /^[A-Za-z]+$/i })}
             type="surname"
             name="surname"
             id="outlined-disabled"
@@ -81,7 +82,7 @@ const Form: FC<IHomeProps> = (props) => {
                 <DatePicker
                   label="Date input"
                   value={field.value}
-                  renderInput={(params) => <TextField name="datePicker" {...params} />}
+                  renderInput={(params) => <TextField name="muiDatePicker" {...params} />}
                   onChange={(e) => {
                     field.onChange(e);
                   }}
