@@ -5,20 +5,15 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { IArrayCard } from '../Form/Form';
+import { IFormInput } from '../Form/FormTwo';
 
-export default class CardForm extends React.Component<IArrayCard> {
-  constructor(props: IArrayCard) {
+export default class CardForm extends React.Component<IFormInput> {
+  constructor(props: IFormInput) {
     super(props);
     this.state = {
       searchValue: '',
     };
   }
-
-  /*  async componentDidMount() {
-    const data = await characterAPI.getCharacter();
-    console.log(`test data`, data);
-  } */
   public render() {
     return (
       <Card sx={{ mb: 7, maxWidth: 300 }}>
@@ -31,34 +26,34 @@ export default class CardForm extends React.Component<IArrayCard> {
         />
         <CardContent>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Name: {this.props.newName}
+            Name: {this.props.firstName}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Surname: {this.props.newSurName}
+            Surname: {this.props.surname}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Date: {this.props.newDatePicker}
+            Date: {this.props.muiDatePicker}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Country: {this.props.newCountry}
+            Country: {this.props.agreeCheckBox}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Agree :{this.props.newAgreeCheckBox ? ' in order' : 'out of order'}
+            Agree :{this.props.agreeCheckBox ? ' in order' : 'out of order'}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            First Gift: {this.props.newGiftFirst ? 'in order' : 'out of order'}
+            First Gift: {this.props.giftFirst ? 'in order' : 'out of order'}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Second Gift: {this.props.newGiftSecond ? 'in order' : 'out of order'}
+            Second Gift: {this.props.giftSecond ? 'in order' : 'out of order'}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Third Gift: {this.props.newGiftThird ? 'in order' : 'out of order'}
+            Third Gift: {this.props.giftThird ? 'in order' : 'out of order'}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Gender: {this.props.newMaleFemale ? 'in order' : 'out of order'}
+            Gender: {this.props.maleFemale ? 'in order' : 'out of order'}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Promotion: {this.props.newPromotionNotification ? 'in order' : 'out of order'}
+            Promotion: {this.props.promotionNotification ? 'in order' : 'out of order'}
           </Typography>
         </CardContent>
         <CardActions>

@@ -15,6 +15,22 @@ import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import CardForm from '../CardForm/CardForm';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { IAppState } from '../../App';
+const fakeState = [
+  {
+    firstName: 'jhon',
+    surname: 'bee',
+    muiDatePicker: null,
+    country: 'germay',
+    agreeCheckBox: true,
+    giftFirst: false,
+    giftSecond: false,
+    giftThird: true,
+    maleFemale: false,
+    promotionNotification: false,
+    image: null,
+  },
+];
 
 const CheckBoxes = [
   {
@@ -34,16 +50,16 @@ export interface IHomeProps {
   isSearchInputData: boolean;
   error: boolean;
 }
-export interface IHomeState {
+/* export interface IHomeState {
   allCardsData: Array<CharacterResponseType>;
   error: boolean;
   loading: boolean;
-}
+} */
 
-interface IFormInput {
-  muiDatePicker: Date | null;
-  name: string;
+export interface IFormInput {
+  firstName: string;
   surname: string;
+  muiDatePicker: Date | null;
   country: string;
   agreeCheckBox: boolean;
   giftFirst: boolean;
@@ -51,15 +67,17 @@ interface IFormInput {
   giftThird: boolean;
   maleFemale: boolean;
   promotionNotification: boolean;
+  image: File | null;
 }
 
 /* Input = styled('input')({
   display: 'none',
 }); */
 
-const Form: FC<IHomeProps> = (props) => {
-  /* const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false); */
+const FormTwo: FC<IHomeProps> = (props) => {
+  /* const [isLoading, setIsLoading] = useState<boolean>(true);*/
+  const [isSavedForm, setIsSavedForm] = useState<boolean>(false);
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [state, setState] = useState<IFormInput[]>([]);
 
   const {
@@ -72,10 +90,16 @@ const Form: FC<IHomeProps> = (props) => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
     setState([data]);
+    setTimeout(() => {
+      setIsSavedForm(false);
+    }, 2300);
   };
   const Input = styled('input')({
     display: 'none',
   });
+  const isFormValidSetter = () => {
+    setIsFormValid(true);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,11 +109,12 @@ const Form: FC<IHomeProps> = (props) => {
       >
         <div>
           <TextField
-            {...register('name', { required: 'Name is required', maxLength: 20 })}
-            error={Boolean(errors.name)}
-            helperText={errors.name?.message}
-            type="name"
-            name="name"
+            {...register('firstName', { required: 'Name is required', maxLength: 20 })}
+            error={Boolean(errors.firstName)}
+            helperText={errors.firstName?.message}
+            onBlur={isFormValidSetter}
+            type="firstName"
+            name="firstName"
             id="outlined-required"
             label="Name"
             placeholder="Your Name.."
@@ -98,6 +123,7 @@ const Form: FC<IHomeProps> = (props) => {
             {...register('surname', { required: 'Surname is required' })}
             error={Boolean(errors.surname)}
             helperText={errors.surname?.message}
+            onBlur={isFormValidSetter}
             type="surname"
             name="surname"
             id="outlined-disabled"
@@ -205,7 +231,7 @@ const Form: FC<IHomeProps> = (props) => {
           </label>
           <div>
             <Button
-              /* disabled={!this.state.isFormValid} */
+              disabled={!isFormValid}
               id="button"
               variant="contained"
               type="submit"
@@ -213,17 +239,15 @@ const Form: FC<IHomeProps> = (props) => {
             >
               Submit form data
             </Button>
-            {/* {this.state.isSavedFormMessage && (
-              <div style={{ color: 'red', fontSize: 30 }}>Your data is saved</div>
-            )} */}
+            {isSavedForm && <div style={{ color: 'red', fontSize: 30 }}>Your data is saved</div>}
           </div>
         </div>
-        {/* <div>{console.log(this.state.cardData)}</div> */}
-        {/* <Grid container spacing={3} sx={{ mt: 2 }}>
-          {this.state.cardData.map((item) => (
+        {console.log(`test state:`, state)}
+        <Grid container spacing={3} sx={{ mt: 2 }}>
+          {state.map((item) => (
             <Grid
               data-testid="card-num-form"
-              key={item.id}
+              key={item.surname}
               sx={{ display: 'flex', justifyContent: 'space-between' }}
               xs={12}
               sm={6}
@@ -232,23 +256,23 @@ const Form: FC<IHomeProps> = (props) => {
               item
             >
               <CardForm
-                newName={item.newName}
-                newSurName={item.newSurName}
-                newDatePicker={item.newDatePicker}
-                newCountry={item.newCountry}
-                newAgreeCheckBox={item.newAgreeCheckBox}
-                newGiftFirst={item.newGiftFirst}
-                newGiftSecond={item.newGiftSecond}
-                newGiftThird={item.newGiftThird}
-                newMaleFemale={item.newMaleFemale}
-                newPromotionNotification={item.newPromotionNotification}
-                newImage={item.newImage}
+                firstName={item.firstName}
+                surname={item.surname}
+                muiDatePicker={item.muiDatePicker}
+                country={item.country}
+                agreeCheckBox={item.agreeCheckBox}
+                giftFirst={item.giftFirst}
+                giftSecond={item.giftSecond}
+                giftThird={item.giftThird}
+                maleFemale={item.maleFemale}
+                promotionNotification={item.promotionNotification}
+                image={item.image}
               />
             </Grid>
           ))}
-        </Grid> */}
+        </Grid>
       </Box>
     </form>
   );
 };
-export default Form;
+export default FormTwo;
