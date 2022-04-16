@@ -1,7 +1,7 @@
 import Header from './Components/Header/Header';
 import { Routes, Route } from 'react-router-dom';
 import Error404 from './Components/Error404/Error404';
-import Formtwo from './Components/Form/Formtwo';
+import Form from './Components/Form/Form';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Home from './Components/Home/Home';
 import * as React from 'react';
@@ -34,7 +34,25 @@ export default class App extends React.Component<IAppProps, IAppState> {
             }
           />
           <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/form" element={<Formtwo />} />
+          <Route
+            path="/form"
+            element={
+              <Form
+                id={0}
+                firstName={''}
+                surname={''}
+                muiDatePicker={''}
+                country={''}
+                agreeCheckBox={false}
+                giftFirst={false}
+                giftSecond={false}
+                giftThird={false}
+                maleFemale={false}
+                promotionNotification={false}
+                image={null}
+              />
+            }
+          />
           <Route path="/error404" element={<Error404 />} />
           <Route path="*" element={<Error404 />} />
         </Routes>

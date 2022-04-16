@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { IFormInput } from '../Form/Formtwo';
+import { IFormInput } from '../Form/Form';
 
 export default class CardForm extends React.Component<IFormInput> {
   constructor(props: IFormInput) {
@@ -20,7 +20,7 @@ export default class CardForm extends React.Component<IFormInput> {
           component="img"
           alt="green iguana"
           height="140"
-          image={this.props.image}
+          image="https://moya-planeta.ru/upload/images/xl/95/fe/95fe44d0e5fe53e49d874f9c2e07381ca8ea823a.jpg"
         />
         <CardContent>
           <Typography color="primary" gutterBottom variant="body2" component="div">
@@ -33,25 +33,25 @@ export default class CardForm extends React.Component<IFormInput> {
             Date: {this.props.muiDatePicker}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Country: {this.props.agreeCheckBox}
+            Country: {this.props.country}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Agree :{this.props.agreeCheckBox}
+            Agree :{this.props.agreeCheckBox ? 'yes' : 'no'}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            First Gift: {this.props.giftFirst}
+            First Gift: {this.props.giftFirst ? 'yes' : 'no'}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Second Gift: {this.props.giftSecond}
+            Second Gift: {this.props.giftSecond ? 'yes' : 'no'}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Third Gift: {this.props.giftThird}
+            Third Gift: {this.props.giftThird ? 'yes' : 'no'}
           </Typography>
           <Typography color="primary" gutterBottom variant="body2" component="div">
-            Gender: {this.props.maleFemale}
+            Gender: {this.props.maleFemale ? 'Male' : 'Female'}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            Promotion: {this.props.promotionNotification}
+            Promotion: {this.props.promotionNotification ? 'yes' : 'no'}
           </Typography>
         </CardContent>
         <CardActions>

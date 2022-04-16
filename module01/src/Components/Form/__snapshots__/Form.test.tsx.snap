@@ -5,9 +5,9 @@ exports[`renders learn react link 1`] = `
   aria-invalid="false"
   class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
   id="outlined-required"
-  name="name"
+  name="firstName"
   placeholder="Your Name.."
-  type="name"
+  type="firstName"
   value=""
 />
 `;

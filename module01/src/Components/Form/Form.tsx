@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { TextField, Box, Button } from '@mui/material';
+import React, { FC, useState } from 'react';
+import { TextField, Box, Button, FormHelperText } from '@mui/material';
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -14,366 +14,240 @@ import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import CardForm from '../CardForm/CardForm';
-import { Path, useForm, UseFormRegister, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-interface IFormValues {
-  'First Name': string;
-  Age: number;
+export interface IFormInput {
+  id: number;
+  firstName: string;
+  surname: string;
+  muiDatePicker: string;
+  country: string;
+  agreeCheckBox: boolean;
+  giftFirst: boolean;
+  giftSecond: boolean;
+  giftThird: boolean;
+  maleFemale: boolean;
+  promotionNotification: boolean;
+  image: File | null;
 }
 
-type InputProps = {
-  label: Path<IFormValues>;
-  register: UseFormRegister<IFormValues>;
-  required: boolean;
-};
+const Form: FC<IFormInput> = () => {
+  const [isSavedForm, setIsSavedForm] = useState<boolean>(false);
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const [state, setState] = useState<IFormInput[]>([]);
 
-export interface IArrayCard {
-  id?: number;
-  newName?: string | null;
-  newSurName?: string | null;
-  newDatePicker?: string | null;
-  newCountry?: string | null;
-  newAgreeCheckBox?: boolean;
-  newGiftFirst?: boolean;
-  newGiftSecond?: boolean;
-  newGiftThird?: boolean;
-  newMaleFemale?: boolean;
-  newPromotionNotification?: boolean;
-  newImage?: File | null;
-  searchInputData?: boolean;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IFormProps {}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IFormState {
-  valuePicker: string | null;
-  valueSelect: string | null;
-  formData: string | null;
-  switchFirsDate: boolean;
-  switchSecondDate: boolean;
-  image: object;
-  isFormValid: boolean;
-  error: string;
-  isErrorFieldName: boolean;
-  isErrorFieldSurname: boolean;
-  isErrorFieldDatePicker: boolean;
-  isErrorFieldCountry: boolean;
-  cardData: Array<IArrayCard>;
-  isSavedFormMessage: boolean;
-}
-
-export default class Form extends React.Component<IFormProps, IFormState> {
-  constructor(props: IFormProps) {
-    super(props);
-    this.state = {
-      valuePicker: '',
-      valueSelect: '',
-      formData: '',
-      switchFirsDate: false,
-      switchSecondDate: false,
-      image: {},
-      isFormValid: false,
-      error: 'Error - enter data please',
-      isErrorFieldName: false,
-      isErrorFieldSurname: false,
-      isErrorFieldDatePicker: false,
-      isErrorFieldCountry: false,
-      cardData: [],
-      isSavedFormMessage: false,
-    };
-  }
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    const name = formData.get(`name`);
-    console.log(`test name:`, name);
-    if (!name) {
-      this.setState({ isErrorFieldName: true, isFormValid: true });
-    } else {
-      this.setState({ isErrorFieldName: false });
-    }
-
-    const surname = formData.get(`surname`);
-    console.log(`test name:`, surname);
-    if (!surname) {
-      this.setState({ isErrorFieldSurname: true, isFormValid: true });
-    } else {
-      this.setState({ isErrorFieldSurname: false });
-    }
-    const datePicker = formData.get(`datePicker`);
-    console.log(`test IsDatePicker:`, datePicker);
-    if (!datePicker) {
-      this.setState({ isErrorFieldDatePicker: true });
-    } else {
-      this.setState({ isErrorFieldDatePicker: false });
-    }
-    const country = formData.get(`country`);
-    console.log(`test country:`, country);
-    if (!country) {
-      this.setState({ isErrorFieldCountry: true });
-    } else {
-      this.setState({ isErrorFieldCountry: false });
-    }
-    const agreeCheckBox = !!formData.get('agreeCheckBox');
-    const giftFirst = !!formData.get(`giftFirst`);
-    const giftSecond = !!formData.get(`giftSecond`);
-    const giftThird = !!formData.get(`giftThird`);
-    const maleFemale = !!formData.get(`male/female`);
-    const promotionNotification = !!formData.get(`promotionNotification`);
-    const image = (formData.get(`image`) as File) || null;
-    console.log(`test image:`, image);
-    if (name && surname && datePicker && country) {
-      this.setState((state) => {
-        return {
-          cardData: [
-            ...state.cardData,
-            {
-              id: Date.now(),
-              newName: name as string,
-              newSurName: surname as string,
-              newDatePicker: datePicker as string,
-              newCountry: country as string,
-              newAgreeCheckBox: agreeCheckBox,
-              newGiftFirst: giftFirst,
-              newGiftSecond: giftSecond,
-              newGiftThird: giftThird,
-              newMaleFemale: maleFemale,
-              newPromotionNotification: promotionNotification,
-              newImage: image,
-            },
-          ],
-        };
-      });
-      this.setState({ isSavedFormMessage: true });
-      setTimeout(() => {
-        this.setState({ isSavedFormMessage: false });
-      }, 2300);
-      e.currentTarget.reset();
-      this.setState({ valuePicker: null });
-      this.setState({ valueSelect: '' });
-    }
-  };
-
-  Input = styled('input')({
+  const Input = styled('input')({
     display: 'none',
   });
 
-  public render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <Box
-          data-testid="form-test"
-          sx={{ mt: 5, ml: 2, '& .MuiTextField-root': { m: 2, width: '25ch' } }}
-        >
-          <div>
-            {this.state.isErrorFieldName && <div style={{ color: 'red' }}>{this.state.error}</div>}
-            <TextField
-              onFocus={() => this.setState({ isFormValid: true })}
-              type="name"
-              name="name"
-              id="outlined-required"
-              label="Name"
-              placeholder="Your Name.."
-            />
-            {this.state.isErrorFieldSurname && (
-              <div style={{ color: 'red' }}>{this.state.error}</div>
-            )}
-            <TextField
-              onFocus={() => this.setState({ isFormValid: true })}
-              type="surname"
-              name="surname"
-              id="outlined-disabled"
-              label="Surname"
-              placeholder="Your Surname.."
-            />
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              {this.state.isErrorFieldDatePicker && (
-                <div style={{ color: 'red' }}>{this.state.error}</div>
+  const {
+    control,
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormInput>();
+  console.log(state);
+
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    const newDataPicker = data.muiDatePicker?.toString();
+    /* const newImage = data.image[0]; */
+    setState([
+      ...state,
+      {
+        ...data,
+        id: Date.now(),
+        muiDatePicker: newDataPicker,
+        /* image: newImage, */
+      },
+    ]);
+    setIsSavedForm(true);
+    setTimeout(() => {
+      setIsSavedForm(false);
+    }, 2300);
+  };
+
+  const isFormValidSetter = () => {
+    setIsFormValid(true);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box
+        data-testid="form-test"
+        sx={{ mt: 5, ml: 2, '& .MuiTextField-root': { m: 2, width: '25ch' } }}
+      >
+        <div>
+          <TextField
+            {...register('firstName', { required: 'Name is required', maxLength: 20 })}
+            error={Boolean(errors.firstName)}
+            helperText={errors.firstName?.message}
+            onChange={isFormValidSetter}
+            type="firstName"
+            name="firstName"
+            id="outlined-required"
+            label="Name"
+            placeholder="Your Name.."
+          />
+          <TextField
+            {...register('surname', { required: 'Surname is required' })}
+            error={Boolean(errors.surname)}
+            helperText={errors.surname?.message}
+            onChange={isFormValidSetter}
+            type="surname"
+            name="surname"
+            id="outlined-disabled"
+            label="Surname"
+            placeholder="Your Surname.."
+          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Controller
+              name="muiDatePicker"
+              control={control}
+              defaultValue={''}
+              rules={{ required: 'Date required' }}
+              render={({ field }) => (
+                <DatePicker
+                  label="Date input"
+                  value={field.value}
+                  renderInput={(params) => (
+                    <TextField
+                      name="muiDatePicker"
+                      {...params}
+                      error={Boolean(errors.muiDatePicker)}
+                      helperText={errors.muiDatePicker?.message}
+                    />
+                  )}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
+                />
               )}
-              <DatePicker
-                label="Date input"
-                value={this.state.valuePicker}
-                renderInput={(params) => <TextField name="datePicker" {...params} />}
-                onChange={(newValue) => {
-                  this.setState({ valuePicker: newValue });
-                  if (newValue) {
-                    this.setState({ isFormValid: true });
-                  }
-                }}
-              />
-            </LocalizationProvider>
-            {this.state.isErrorFieldCountry && (
-              <div style={{ color: 'red' }}>{this.state.error}</div>
-            )}
-            <FormControl sx={{ mt: 2, ml: 2, width: '25ch' }}>
-              <InputLabel id="demo-simple-select-label">Country</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={this.state.valueSelect}
-                label="Country"
-                name="country"
-                onChange={(e) => {
-                  this.setState({ valueSelect: e.target.value /* as string */ });
-                  if (e) {
-                    this.setState({ isFormValid: true });
-                  }
-                }}
-              >
-                <MenuItem value={'Spain'}>Spain</MenuItem>
-                <MenuItem value={'France'}>France</MenuItem>
-                <MenuItem value={'Germany'}>Germany</MenuItem>
-              </Select>
-            </FormControl>
-            <FormGroup>
+            />
+          </LocalizationProvider>
+          <FormControl sx={{ mt: 2, ml: 2, width: '25ch' }} error={Boolean(errors.country)}>
+            <InputLabel id="demo-simple-select-label">Country</InputLabel>
+            <Controller
+              name="country"
+              control={control}
+              defaultValue={''}
+              rules={{ required: 'Select required' }}
+              render={({ field }) => (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={field.value}
+                  label="Country"
+                  name="country"
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
+                >
+                  <MenuItem value={'Spain'}>Spain</MenuItem>
+                  <MenuItem value={'France'}>France</MenuItem>
+                  <MenuItem value={'Germany'}>Germany</MenuItem>
+                </Select>
+              )}
+            />
+            <FormHelperText>{errors.country?.message}</FormHelperText>
+          </FormControl>
+          <FormGroup>
+            <FormControl error={Boolean(errors.agreeCheckBox)}>
               <FormControlLabel
                 control={
                   <Checkbox
+                    {...register('agreeCheckBox', { required: 'Please agree to data processing' })}
                     name="agreeCheckBox"
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        this.setState({ isFormValid: true });
-                      }
-                    }}
                   />
                 }
                 label="Agree to data processing"
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        this.setState({ isFormValid: true });
-                      }
-                    }}
-                    name="giftFirst"
-                  />
-                }
-                label="Gift first"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        this.setState({ isFormValid: true });
-                      }
-                    }}
-                    name="giftSecond"
-                  />
-                }
-                label="Gift second"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        this.setState({ isFormValid: true });
-                      }
-                    }}
-                    name="giftThird"
-                  />
-                }
-                label="Gift third"
-              />
-            </FormGroup>
+              <FormHelperText>{errors.agreeCheckBox?.message}</FormHelperText>
+            </FormControl>
             <FormControlLabel
-              control={
-                <Switch
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      this.setState({ isFormValid: true });
-                    }
-                  }}
-                  name="male/female"
-                  defaultChecked
-                />
-              }
-              label="Male/Female"
+              control={<Checkbox {...register('giftFirst')} name="giftFirst" />}
+              label="Gift first"
             />
             <FormControlLabel
-              control={
-                <Switch
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      this.setState({ isFormValid: true });
-                    }
-                  }}
-                  name="promotionNotification"
-                />
-              }
-              label="Promotion notifications"
+              control={<Checkbox {...register('giftSecond')} name="giftSecond" />}
+              label="Gift second"
             />
-          </div>
+            <FormControlLabel
+              control={<Checkbox {...register('giftThird')} name="giftThird" />}
+              label="Gift third"
+            />
+          </FormGroup>
+          <FormControlLabel
+            control={<Switch {...register('maleFemale')} name="maleFemale" />}
+            label="Male/Female"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                {...register('promotionNotification')}
+                defaultChecked
+                name="promotionNotification"
+              />
+            }
+            label="Promotion notifications"
+          />
+        </div>
+        <div>
+          <label htmlFor="contained-button-file">
+            <Input
+              {...register('image')}
+              accept="image/*"
+              id="contained-button-file"
+              type="file"
+              name="image"
+            />
+            <Button sx={{ mt: 3 }} variant="contained" component="span">
+              Upload profile picture
+            </Button>
+          </label>
           <div>
-            <label htmlFor="contained-button-file">
-              <this.Input
-                onChange={(e) => {
-                  if (e.target.value) {
-                    this.setState({ isFormValid: true });
-                  }
-                }}
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-                name="image"
-              />
-              <Button sx={{ mt: 3 }} variant="contained" component="span">
-                Upload profile picture
-              </Button>
-            </label>
-            <div>
-              <Button
-                disabled={!this.state.isFormValid}
-                id="button"
-                variant="contained"
-                type="submit"
-                sx={{ mt: 3 }}
-              >
-                Submit form data
-              </Button>
-              {this.state.isSavedFormMessage && (
-                <div style={{ color: 'red', fontSize: 30 }}>Your data is saved</div>
-              )}
-            </div>
+            <Button
+              disabled={!isFormValid}
+              id="button"
+              variant="contained"
+              type="submit"
+              sx={{ mt: 3 }}
+            >
+              Submit form data
+            </Button>
+            {isSavedForm && <div style={{ color: 'red', fontSize: 30 }}>Your data is saved</div>}
           </div>
-          {/* <div>{console.log(this.state.cardData)}</div> */}
-          <Grid container spacing={3} sx={{ mt: 2 }}>
-            {this.state.cardData.map((item) => (
-              <Grid
-                data-testid="card-num-form"
-                key={item.id}
-                sx={{ display: 'flex', justifyContent: 'space-between' }}
-                xs={12}
-                sm={6}
-                md={4}
-                lg={2}
-                item
-              >
-                <CardForm
-                  newName={item.newName}
-                  newSurName={item.newSurName}
-                  newDatePicker={item.newDatePicker}
-                  newCountry={item.newCountry}
-                  newAgreeCheckBox={item.newAgreeCheckBox}
-                  newGiftFirst={item.newGiftFirst}
-                  newGiftSecond={item.newGiftSecond}
-                  newGiftThird={item.newGiftThird}
-                  newMaleFemale={item.newMaleFemale}
-                  newPromotionNotification={item.newPromotionNotification}
-                  newImage={item.newImage}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      </form>
-    );
-  }
-}
+        </div>
+        <Grid container spacing={3} sx={{ mt: 2 }}>
+          {state.map((item) => (
+            <Grid
+              data-testid="card-num-form"
+              key={item.id}
+              sx={{ display: 'flex', justifyContent: 'space-between' }}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={2}
+              item
+            >
+              <CardForm
+                id={item.id}
+                firstName={item.firstName}
+                surname={item.surname}
+                muiDatePicker={item.muiDatePicker}
+                country={item.country}
+                agreeCheckBox={item.agreeCheckBox}
+                giftFirst={item.giftFirst}
+                giftSecond={item.giftSecond}
+                giftThird={item.giftThird}
+                maleFemale={item.maleFemale}
+                promotionNotification={item.promotionNotification}
+                image={item.image}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </form>
+  );
+};
+export default Form;
