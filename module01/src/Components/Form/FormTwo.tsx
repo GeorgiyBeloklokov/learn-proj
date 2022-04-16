@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { TextField, Box, Button, FormHelperText } from '@mui/material';
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -15,7 +15,6 @@ import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import CardForm from '../CardForm/CardForm';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { IAppState } from '../../App';
 const fakeState = [
   {
     firstName: 'jhon',
@@ -45,21 +44,11 @@ const CheckBoxes = [
   },
 ];
 
-export interface IHomeProps {
-  setState: React.Dispatch<React.SetStateAction<IAppState>>;
-  isSearchInputData: boolean;
-  error: boolean;
-}
-/* export interface IHomeState {
-  allCardsData: Array<CharacterResponseType>;
-  error: boolean;
-  loading: boolean;
-} */
-
 export interface IFormInput {
+  id: number;
   firstName: string;
   surname: string;
-  muiDatePicker: Date | null;
+  muiDatePicker: string;
   country: string;
   agreeCheckBox: boolean;
   giftFirst: boolean;
@@ -70,15 +59,15 @@ export interface IFormInput {
   image: File | null;
 }
 
-/* Input = styled('input')({
-  display: 'none',
-}); */
-
-const FormTwo: FC<IHomeProps> = (props) => {
+const Formtwo: FC<IFormInput> = (props) => {
   /* const [isLoading, setIsLoading] = useState<boolean>(true);*/
   const [isSavedForm, setIsSavedForm] = useState<boolean>(false);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [state, setState] = useState<IFormInput[]>([]);
+
+  const Input = styled('input')({
+    display: 'none',
+  });
 
   const {
     control,
@@ -89,14 +78,25 @@ const FormTwo: FC<IHomeProps> = (props) => {
   console.log(state);
 
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    setState([data]);
+    const newDataPicker = data.muiDatePicker?.toString();
+    /* const reader = new FileReader();
+    const newImage = reader.readAsDataURL(data.image.[0]); 
+    console.log(`test newImage`, newImage);*/
+
+    setState([
+      ...state,
+      {
+        ...data,
+        id: Date.now(),
+        muiDatePicker: newDataPicker,
+      },
+    ]);
+    setIsSavedForm(true);
     setTimeout(() => {
       setIsSavedForm(false);
     }, 2300);
   };
-  const Input = styled('input')({
-    display: 'none',
-  });
+
   const isFormValidSetter = () => {
     setIsFormValid(true);
   };
@@ -134,7 +134,7 @@ const FormTwo: FC<IHomeProps> = (props) => {
             <Controller
               name="muiDatePicker"
               control={control}
-              defaultValue={null}
+              defaultValue={''}
               rules={{ required: 'Date required' }}
               render={({ field }) => (
                 <DatePicker
@@ -224,7 +224,13 @@ const FormTwo: FC<IHomeProps> = (props) => {
         </div>
         <div>
           <label htmlFor="contained-button-file">
-            <Input accept="image/*" id="contained-button-file" multiple type="file" name="image" />
+            <Input
+              {...register('image')}
+              accept="image/*"
+              id="contained-button-file"
+              type="file"
+              name="image"
+            />
             <Button sx={{ mt: 3 }} variant="contained" component="span">
               Upload profile picture
             </Button>
@@ -242,12 +248,12 @@ const FormTwo: FC<IHomeProps> = (props) => {
             {isSavedForm && <div style={{ color: 'red', fontSize: 30 }}>Your data is saved</div>}
           </div>
         </div>
-        {console.log(`test state:`, state)}
+        {/* {console.log(`test state:`, state)} */}
         <Grid container spacing={3} sx={{ mt: 2 }}>
           {state.map((item) => (
             <Grid
               data-testid="card-num-form"
-              key={item.surname}
+              key={item.id}
               sx={{ display: 'flex', justifyContent: 'space-between' }}
               xs={12}
               sm={6}
@@ -256,6 +262,7 @@ const FormTwo: FC<IHomeProps> = (props) => {
               item
             >
               <CardForm
+                id={item.id}
                 firstName={item.firstName}
                 surname={item.surname}
                 muiDatePicker={item.muiDatePicker}
@@ -275,4 +282,4 @@ const FormTwo: FC<IHomeProps> = (props) => {
     </form>
   );
 };
-export default FormTwo;
+export default Formtwo;
