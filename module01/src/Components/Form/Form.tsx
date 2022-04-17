@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { TextField, Box, Button, FormHelperText } from '@mui/material';
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -31,15 +31,9 @@ const Form: FC = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<IFormProps>();
-  console.log(state);
 
   const onSubmit: SubmitHandler<IFormProps> = (data: IFormProps) => {
     const newDataPicker = data.muiDatePicker?.toString();
-    /* const reader = new FileReader();
-    const etreImage = data.image[0];
-    console.log(`test etreImage:`, etreImage);
-    const newImage = reader.readAsDataURL(etreImage);
-    console.log(`test newImage:`, newImage); */
 
     setState([
       ...state,
@@ -47,7 +41,6 @@ const Form: FC = () => {
         ...data,
         id: Date.now(),
         muiDatePicker: newDataPicker,
-        /* image: newImage, */
       },
     ]);
     setIsSavedForm(true);

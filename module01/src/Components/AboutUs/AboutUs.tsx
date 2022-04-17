@@ -2,15 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IAboutUsProps {}
-
-export default class AboutUs extends React.Component<IAboutUsProps> {
-  constructor(props: IAboutUsProps) {
-    super(props);
-
-    this.state = {};
-  }
+export default class AboutUs extends React.Component {
   public render() {
     return (
       <Box

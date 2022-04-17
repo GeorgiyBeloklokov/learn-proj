@@ -55,12 +55,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IHeaderProps {
   setState: React.Dispatch<React.SetStateAction<IAppState>>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IHeaderState {
   searchValue: string;
 }
@@ -121,7 +119,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
               RSSchool
             </Typography>
             <Stack spacing={2} direction="row">
-              {/* <Button color="primary" variant="contained" component={Link} to={'/'}>
+              <Button color="primary" variant="contained" component={Link} to={'/'}>
                 Home
               </Button>
               <Button color="primary" variant="contained" component={Link} to={'/form'}>
@@ -132,7 +130,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
               </Button>
               <Button variant="contained" disabled>
                 Contained
-              </Button> */}
+              </Button>
             </Stack>
             <Search>
               <SearchIconWrapper>

@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { SetStateAction } from 'react';
-import CardPage, { ICardPageState } from './CardPage';
+import CardPage from './CardPage';
 
 test('renders learn react link', () => {
   render(
@@ -22,10 +21,6 @@ test('renders learn react link', () => {
       image={''}
       url={''}
       created={''}
-      setState={function (value: SetStateAction<ICardPageState>): void {
-        throw new Error('Function not implemented.');
-      }}
-      open={false}
     />
   );
   const element = screen.findAllByText(/props.image/i);
@@ -52,10 +47,6 @@ test('renders component', () => {
       image={''}
       url={''}
       created={''}
-      setState={function (value: SetStateAction<ICardPageState>): void {
-        throw new Error('Function not implemented.');
-      }}
-      open={false}
     />
   );
   const card = screen.getByTestId('card');

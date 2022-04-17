@@ -11,11 +11,7 @@ export interface IHomeProps {
   setState: React.Dispatch<React.SetStateAction<IAppState>>;
   isSearchInputData: boolean;
 }
-/* export interface IHomeState {
-  allCardsData: Array<CharacterResponseType>;
-  error: boolean;
-  loading: boolean;
-} */
+
 const Home: FC<IHomeProps> = (props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [allCardsData, setAllCardsData] = useState<Array<CharacterResponseType>>([]);
@@ -31,11 +27,10 @@ const Home: FC<IHomeProps> = (props) => {
         const res = await characterAPI.getCharacter();
         setAllCardsData([...res, ...allCardsData]);
       } else {
-        const res = await axios.get('response'); /* characterAPI.getDefaultCharacter() */ // (for test:)  const res = await axios.get('response');
-        setAllCardsData([...allCardsData, ...res.data]); // (for test:)  [...allCardsData, ...res.data],
+        const res = await characterAPI.getDefaultCharacter(); // (for run test replace whit:)  const res = await axios.get('response');
+        setAllCardsData([...allCardsData, ...res]); // (for run test replace whit:)  [...allCardsData, ...res.data],
         setIsLoading(false);
         props.setState({ isSearchInputData: false });
-        console.log(`test isSearchInputData:`, props.isSearchInputData);
       }
     } catch (error) {
       setIsError(true);
@@ -80,7 +75,6 @@ const Home: FC<IHomeProps> = (props) => {
           item
         >
           <CardPage
-            data-testid="card-home"
             id={item.id}
             name={item.name}
             image={item.image}
@@ -92,10 +86,6 @@ const Home: FC<IHomeProps> = (props) => {
             location={item.location}
             url={item.url}
             created={item.created}
-            setState={function (): void {
-              ('Function not implemented.');
-            }}
-            open={false}
           />
         </Grid>
       ))}

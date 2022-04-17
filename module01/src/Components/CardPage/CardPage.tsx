@@ -5,14 +5,32 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CharacterResponseType } from '../../Types/Types';
 import ModalFirst from '../ModalFirst/ModalFirst';
+export interface ICardPageProps {
+  image: string;
+  id: number;
+  name: string;
+  status: string;
+  type: string;
+  gender: string;
+  species: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  created: string;
+}
 
 export interface ICardPageState {
   open: boolean;
 }
-export default class CardPage extends React.Component<CharacterResponseType, ICardPageState> {
-  constructor(props: CharacterResponseType) {
+export default class CardPage extends React.Component<ICardPageProps, ICardPageState> {
+  constructor(props: ICardPageProps) {
     super(props);
     this.state = {
       open: false,
@@ -38,7 +56,13 @@ export default class CardPage extends React.Component<CharacterResponseType, ICa
           url={this.props.url}
           created={this.props.created}
         />
-        <CardMedia component="img" alt="green iguana" height="180" image={this.props.image} />
+        <CardMedia
+          data-testid="card-home"
+          component="img"
+          alt="green iguana"
+          height="180"
+          image={this.props.image}
+        />
         <Button onClick={() => this.setState({ open: true })}>Show more...</Button>
         <CardContent>
           <Typography

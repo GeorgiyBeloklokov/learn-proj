@@ -16,10 +16,7 @@ export type CharacterResponseType = {
     url: string;
   };
   image: string;
-  /* episode: Array<string>; */
   url: string;
   created: string;
-  searchInputData?: boolean;
-  setState: React.Dispatch<React.SetStateAction<ICardPageState>>;
   open: boolean;
 };

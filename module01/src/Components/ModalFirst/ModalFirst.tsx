@@ -5,7 +5,28 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
-import { CharacterResponseType } from '../../Types/Types';
+import { ICardPageState } from '../CardPage/CardPage';
+export interface IModalFirstProps {
+  setState: React.Dispatch<React.SetStateAction<ICardPageState>>;
+  image: string;
+  open: boolean;
+  id: number;
+  name: string;
+  status: string;
+  type: string;
+  gender: string;
+  species: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  created: string;
+}
 
 const style = {
   position: 'absolute',
@@ -19,8 +40,8 @@ const style = {
   p: 4,
 };
 
-export default class ModalFirst extends React.Component<CharacterResponseType> {
-  constructor(props: CharacterResponseType) {
+export default class ModalFirst extends React.Component<IModalFirstProps> {
+  constructor(props: IModalFirstProps) {
     super(props);
 
     this.state = {};
