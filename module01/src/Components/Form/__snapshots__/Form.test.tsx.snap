@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders learn react link 1`] = `
+exports[`testing inputs 1`] = `
 <input
   aria-invalid="false"
   class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
@@ -12,7 +12,7 @@ exports[`renders learn react link 1`] = `
 />
 `;
 
-exports[`renders learn react link 2`] = `
+exports[`testing inputs 2`] = `
 <input
   aria-invalid="false"
   class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"

@@ -1,13 +1,16 @@
 import { fireEvent, render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Header from './Header';
 
 it(' render correctly', () => {
   const { getByTestId, getByPlaceholderText } = render(
-    <Header
-      setState={function (): void {
-        ('Function not implemented.');
-      }}
-    />
+    <MemoryRouter>
+      <Header
+        setState={function (): void {
+          ('Function not implemented.');
+        }}
+      />
+    </MemoryRouter>
   );
 
   expect(getByTestId('search')).toBeTruthy();
@@ -17,11 +20,13 @@ it(' render correctly', () => {
 describe('input value', () => {
   it('update on change', () => {
     const { getByPlaceholderText } = render(
-      <Header
-        setState={function (): void {
-          ('Function not implemented.');
-        }}
-      />
+      <MemoryRouter>
+        <Header
+          setState={function (): void {
+            ('Function not implemented.');
+          }}
+        />
+      </MemoryRouter>
     );
     const searchInput = getByPlaceholderText('Search…') as HTMLInputElement;
     fireEvent.change(searchInput, { target: { value: 'test' } });
