@@ -13,28 +13,13 @@ import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
-import CardForm from '../CardForm/CardForm';
+import CardForm, { IFormProps } from '../CardForm/CardForm';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-export interface IFormInput {
-  id: number;
-  firstName: string;
-  surname: string;
-  muiDatePicker: string;
-  country: string;
-  agreeCheckBox: boolean;
-  giftFirst: boolean;
-  giftSecond: boolean;
-  giftThird: boolean;
-  maleFemale: boolean;
-  promotionNotification: boolean;
-  image: File | null;
-}
-
-const Form: FC<IFormInput> = () => {
+const Form: FC = () => {
   const [isSavedForm, setIsSavedForm] = useState<boolean>(false);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
-  const [state, setState] = useState<IFormInput[]>([]);
+  const [state, setState] = useState<IFormProps[]>([]);
 
   const Input = styled('input')({
     display: 'none',
@@ -45,12 +30,17 @@ const Form: FC<IFormInput> = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInput>();
+  } = useForm<IFormProps>();
   console.log(state);
 
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+  const onSubmit: SubmitHandler<IFormProps> = (data: IFormProps) => {
     const newDataPicker = data.muiDatePicker?.toString();
-    /* const newImage = data.image[0]; */
+    /* const reader = new FileReader();
+    const etreImage = data.image[0];
+    console.log(`test etreImage:`, etreImage);
+    const newImage = reader.readAsDataURL(etreImage);
+    console.log(`test newImage:`, newImage); */
+
     setState([
       ...state,
       {

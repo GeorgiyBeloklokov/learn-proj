@@ -5,10 +5,24 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { IFormInput } from '../Form/Form';
 
-export default class CardForm extends React.Component<IFormInput> {
-  constructor(props: IFormInput) {
+export interface IFormProps {
+  id: number;
+  firstName: string;
+  surname: string;
+  muiDatePicker: string;
+  country: string;
+  agreeCheckBox: boolean;
+  giftFirst: boolean;
+  giftSecond: boolean;
+  giftThird: boolean;
+  maleFemale: boolean;
+  promotionNotification: boolean;
+  image: File | null;
+}
+
+export default class CardForm extends React.Component<IFormProps> {
+  constructor(props: IFormProps) {
     super(props);
     this.state = {};
   }

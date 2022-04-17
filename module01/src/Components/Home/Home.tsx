@@ -31,8 +31,8 @@ const Home: FC<IHomeProps> = (props) => {
         const res = await characterAPI.getCharacter();
         setAllCardsData([...res, ...allCardsData]);
       } else {
-        const res = await characterAPI.getDefaultCharacter(); // for test:  const res = await axios.get('response');
-        setAllCardsData([...allCardsData, ...res]); // for test: newData: [...state.newData, ...res.data],
+        const res = await axios.get('response'); /* characterAPI.getDefaultCharacter() */ // (for test:)  const res = await axios.get('response');
+        setAllCardsData([...allCardsData, ...res.data]); // (for test:)  [...allCardsData, ...res.data],
         setIsLoading(false);
         props.setState({ isSearchInputData: false });
         console.log(`test isSearchInputData:`, props.isSearchInputData);
@@ -80,7 +80,7 @@ const Home: FC<IHomeProps> = (props) => {
           item
         >
           <CardPage
-            key={item.id}
+            data-testid="card-home"
             id={item.id}
             name={item.name}
             image={item.image}

@@ -38,16 +38,16 @@ export default class CardPage extends React.Component<CharacterResponseType, ICa
           url={this.props.url}
           created={this.props.created}
         />
-        <CardMedia
-          data-testid="card"
-          component="img"
-          alt="green iguana"
-          height="180"
-          image={this.props.image}
-        />
+        <CardMedia component="img" alt="green iguana" height="180" image={this.props.image} />
         <Button onClick={() => this.setState({ open: true })}>Show more...</Button>
         <CardContent>
-          <Typography color="primary" gutterBottom variant="body2" component="div">
+          <Typography
+            data-testid="card"
+            color="primary"
+            gutterBottom
+            variant="body2"
+            component="div"
+          >
             Id: {this.props.id}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">

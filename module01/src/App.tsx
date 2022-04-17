@@ -34,25 +34,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
             }
           />
           <Route path="/aboutus" element={<AboutUs />} />
-          <Route
-            path="/form"
-            element={
-              <Form
-                id={0}
-                firstName={''}
-                surname={''}
-                muiDatePicker={''}
-                country={''}
-                agreeCheckBox={false}
-                giftFirst={false}
-                giftSecond={false}
-                giftThird={false}
-                maleFemale={false}
-                promotionNotification={false}
-                image={null}
-              />
-            }
-          />
+          <Route path="/form" element={<Form />} />
           <Route path="/error404" element={<Error404 />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
