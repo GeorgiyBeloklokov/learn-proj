@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import Home from './Home';
 import axios from 'axios';
 
-describe('character test', () => {
+describe('character testing get and numbers of items', () => {
   let response: {
     data: {
       id: number;

@@ -94,6 +94,7 @@ const Form: FC = () => {
                   value={field.value}
                   renderInput={(params) => (
                     <TextField
+                      data-testid="mui-date-picker"
                       name="muiDatePicker"
                       {...params}
                       error={Boolean(errors.muiDatePicker)}
@@ -189,6 +190,7 @@ const Form: FC = () => {
           </label>
           <div>
             <Button
+              data-testid="button-submit-form"
               disabled={!isFormValid}
               id="button"
               variant="contained"
@@ -197,7 +199,11 @@ const Form: FC = () => {
             >
               Submit form data
             </Button>
-            {isSavedForm && <div style={{ color: 'red', fontSize: 30 }}>Your data is saved</div>}
+            {isSavedForm && (
+              <div data-testid="toggle-data-is-saved" style={{ color: 'red', fontSize: 30 }}>
+                Your data is saved
+              </div>
+            )}
           </div>
         </div>
         <Grid container spacing={3} sx={{ mt: 2 }}>
