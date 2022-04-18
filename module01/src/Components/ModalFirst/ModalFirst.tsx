@@ -5,27 +5,10 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
-import { ICardPageState } from '../CardPage/CardPage';
-export interface IModalFirstProps {
-  setState: React.Dispatch<React.SetStateAction<ICardPageState>>;
-  image: string;
-  open: boolean;
-  id: number;
-  name: string;
-  status: string;
-  type: string;
-  gender: string;
-  species: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  url: string;
-  created: string;
+import { IForPrintProps, IModalFirstProps } from '../../Types/Interfaces';
+
+interface IModalFirstState {
+  forPrintProps: IForPrintProps[];
 }
 
 const style = {
@@ -40,12 +23,19 @@ const style = {
   p: 4,
 };
 
-export default class ModalFirst extends React.Component<IModalFirstProps> {
+export default class ModalFirst extends React.Component<IModalFirstProps, IModalFirstState> {
   constructor(props: IModalFirstProps) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      forPrintProps: [
+        {
+          ...this.props,
+        },
+      ],
+    };
   }
+  setterIsOpen = () => this.props.setState({ open: false });
 
   public render() {
     return (
@@ -54,7 +44,7 @@ export default class ModalFirst extends React.Component<IModalFirstProps> {
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           open={this.props.open}
-          onClose={() => this.props.setState({ open: false })}
+          onClose={this.setterIsOpen}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
@@ -64,100 +54,53 @@ export default class ModalFirst extends React.Component<IModalFirstProps> {
           <Box data-testid="modal-first" sx={style}>
             <Button
               sx={{ position: 'absolute', top: '1%', left: '88%' }}
-              onClick={() => this.props.setState({ open: false })}
+              onClick={this.setterIsOpen}
             >
               X
             </Button>
             <CardMedia component="img" alt="image" height="280" image={this.props.image} />
-            <Typography color="primary" gutterBottom variant="body2" component="div">
-              Id: {this.props.id}
-            </Typography>
-            <Typography gutterBottom variant="body2" component="div">
-              Name: {this.props.name}
-            </Typography>
-            <Typography color="primary" gutterBottom variant="body2" component="div">
-              Status: {this.props.status}
-            </Typography>
-            <Typography gutterBottom variant="body2" component="div">
-              Species: {this.props.species}
-            </Typography>
-            <Typography gutterBottom variant="body2" component="div">
-              Type: {this.props.type}
-            </Typography>
-            <Typography gutterBottom variant="body2" component="div">
-              Gender: {this.props.gender}
-            </Typography>
-            <Typography
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-              }}
-              color="primary"
-              gutterBottom
-              variant="body2"
-              component="div"
-            >
-              Origin Name: {this.props.origin.name}
-            </Typography>
-            <Typography
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-              }}
-              color="primary"
-              gutterBottom
-              variant="body2"
-              component="div"
-            >
-              Origin URL: {this.props.origin.url}
-            </Typography>
-            <Typography
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-              }}
-              gutterBottom
-              variant="body2"
-              component="div"
-            >
-              Location Name: {this.props.location.name}
-            </Typography>
-            <Typography
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-              }}
-              gutterBottom
-              variant="body2"
-              component="div"
-            >
-              Location URL: {this.props.location.url}
-            </Typography>
-            <Typography
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
-              }}
-              color="primary"
-              gutterBottom
-              variant="body2"
-              component="div"
-            >
-              Url: {this.props.url}
-            </Typography>
-            <Typography gutterBottom variant="body2" component="div">
-              Created: {this.props.created}
-            </Typography>
+            {this.state.forPrintProps.map((item) => {
+              return (
+                <div key={item.id}>
+                  <Typography
+                    sx={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                    color="primary"
+                    gutterBottom
+                    variant="body2"
+                    component="div"
+                  >
+                    Id: {item.id}
+                    <br />
+                    Name: {item.name}
+                    <br />
+                    Status: {item.status}
+                    <br />
+                    Species: {item.species}
+                    <br />
+                    Type: {item.type}
+                    <br />
+                    Gender: {item.gender}
+                    <br />
+                    Origin Name: {item.origin.name}
+                    <br />
+                    Origin URL: {item.origin.url}
+                    <br />
+                    Location Name: {item.location.name}
+                    <br />
+                    Location URL: {item.location.url}
+                    <br />
+                    Url: {item.url}
+                    <br />
+                    Created: {item.created}
+                  </Typography>
+                </div>
+              );
+            })}
           </Box>
         </Modal>
       </div>

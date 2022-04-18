@@ -13,8 +13,9 @@ import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
-import CardForm, { IFormProps } from '../CardForm/CardForm';
+import CardForm from '../CardForm/CardForm';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { IFormProps } from '../../Types/Interfaces';
 
 const Form: FC = () => {
   const [isSavedForm, setIsSavedForm] = useState<boolean>(false);

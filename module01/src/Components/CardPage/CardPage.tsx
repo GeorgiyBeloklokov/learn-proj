@@ -6,25 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ModalFirst from '../ModalFirst/ModalFirst';
-export interface ICardPageProps {
-  image: string;
-  id: number;
-  name: string;
-  status: string;
-  type: string;
-  gender: string;
-  species: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  url: string;
-  created: string;
-}
+import { ICardPageProps } from '../../Types/Interfaces';
 
 export interface ICardPageState {
   open: boolean;
@@ -64,107 +46,6 @@ export default class CardPage extends React.Component<ICardPageProps, ICardPageS
           image={this.props.image}
         />
         <Button onClick={() => this.setState({ open: true })}>Show more...</Button>
-        <CardContent>
-          <Typography
-            data-testid="card"
-            color="primary"
-            gutterBottom
-            variant="body2"
-            component="div"
-          >
-            Id: {this.props.id}
-          </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Name: {this.props.name}
-          </Typography>
-          <Typography color="primary" gutterBottom variant="body2" component="div">
-            Status: {this.props.status}
-          </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Species: {this.props.species}
-          </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Type: {this.props.type}
-          </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Gender: {this.props.gender}
-          </Typography>
-          <Typography
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-            }}
-            color="primary"
-            gutterBottom
-            variant="body2"
-            component="div"
-          >
-            Origin Name: {this.props.origin.name}
-          </Typography>
-          <Typography
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-            }}
-            color="primary"
-            gutterBottom
-            variant="body2"
-            component="div"
-          >
-            Origin URL: {this.props.origin.url}
-          </Typography>
-          <Typography
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-            }}
-            gutterBottom
-            variant="body2"
-            component="div"
-          >
-            Location Name: {this.props.location.name}
-          </Typography>
-          <Typography
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-            }}
-            gutterBottom
-            variant="body2"
-            component="div"
-          >
-            Location URL: {this.props.location.url}
-          </Typography>
-          <Typography
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-            }}
-            color="primary"
-            gutterBottom
-            variant="body2"
-            component="div"
-          >
-            Url: {this.props.url}
-          </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Created: {this.props.created}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
       </Card>
     );
   }
