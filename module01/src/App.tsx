@@ -1,36 +1,30 @@
-import * as React from 'react';
+import { FC, useState, createContext, useContext } from 'react';
 import Header from './Components/Header/Header';
-import { Routes, Route, HashRouter, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Error404 from './Components/Error404/Error404';
 import Form from './Components/Form/Form';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Home from './Components/Home/Home';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IAppProps {}
+const UserContext = createContext<string | null>(null);
 
 export interface IAppState {
   isSearchInputData: boolean;
 }
 
-export default class App extends React.Component<IAppProps, IAppState> {
-  constructor(props: IAppProps) {
-    super(props);
-    this.setState = this.setState.bind(this);
-    this.state = {
-      isSearchInputData: false,
-    };
-  }
-
-  public render() {
-    return (
-      <>
-        <Header setState={this.setState} />
+const App: FC = () => {
+  return (
+    <>
+      <UserContext.Provider value="hello">
+        <Header setIsSearchInputData={setIsSearchInputData} />
         <Routes>
           <Route
             path="/"
             element={
-              <Home setState={this.setState} isSearchInputData={this.state.isSearchInputData} />
+              <Home
+                setIsSearchInputData={setIsSearchInputData}
+                isSearchInputData={isSearchInputData}
+              />
             }
           />
           <Route path="/aboutus" element={<AboutUs />} />
@@ -38,7 +32,9 @@ export default class App extends React.Component<IAppProps, IAppState> {
           <Route path="/error404" element={<Error404 />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
-      </>
-    );
-  }
-}
+      </UserContext.Provider>
+    </>
+  );
+};
+
+export default App;

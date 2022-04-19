@@ -57,7 +57,7 @@ describe('character testing get and numbers of items', () => {
     (axios.get as jest.Mock).mockReturnValue(response);
     render(
       <Home
-        setState={function (): void {
+        setIsSearchInputData={function (): void {
           ('Function not implemented.');
         }}
         isSearchInputData={false}

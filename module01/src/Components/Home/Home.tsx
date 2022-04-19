@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 export interface IHomeProps {
-  setState: React.Dispatch<React.SetStateAction<IAppState>>;
+  setIsSearchInputData: React.Dispatch<React.SetStateAction<IAppState>>;
   isSearchInputData: boolean;
 }
 
@@ -30,7 +30,7 @@ const Home: FC<IHomeProps> = (props) => {
         const res = await characterAPI.getDefaultCharacter(); // (for run test replace whit:)  const res = await axios.get('response');
         setAllCardsData([...allCardsData, ...res]); // (for run test replace whit:)  [...allCardsData, ...res.data],
         setIsLoading(false);
-        props.setState({ isSearchInputData: false });
+        props.setIsSearchInputData(false);
       }
     } catch (error) {
       setIsError(true);

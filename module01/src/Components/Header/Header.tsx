@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { IAppState } from '../../App';
+import { useContext } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export interface IHeaderProps {
-  setState: React.Dispatch<React.SetStateAction<IAppState>>;
+  setIsSearchInputData: React.Dispatch<React.SetStateAction<IAppState>>;
 }
 
 export interface IHeaderState {
@@ -92,10 +93,10 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
     const examples: Array<string> = ['character', 'Character'];
     const isMatchWord = examples.some((el) => base.includes(el));
     if (isMatchWord) {
-      this.props.setState({ isSearchInputData: true });
+      this.props.setIsSearchInputData(true);
     }
   };
-
+  context = useContext(UserContext);
   public render() {
     return (
       <Box sx={{ flexGrow: 1 }}>
