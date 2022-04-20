@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useContext } from 'react';
 import { Grid, Typography } from '@mui/material';
 import CardPage from '../CardPage/CardPage';
 import { CharacterResponseType } from '../../Types/Types';
@@ -7,30 +7,32 @@ import { characterAPI } from '../ApiService/ApiService';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-export interface IHomeProps {
-  setIsSearchInputData: React.Dispatch<React.SetStateAction<IAppState>>;
-  isSearchInputData: boolean;
+import MainContext from '../../App';
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+/* export interface IHomeProps {
+  isSearchInput: boolean;
 }
-
-const Home: FC<IHomeProps> = (props) => {
+ */
+const Home: FC<string | null | boolean> = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [allCardsData, setAllCardsData] = useState<Array<CharacterResponseType>>([]);
   const [isError, setIsError] = useState<boolean>(false);
+  const { isSearchInput, setIsSearchInput } = useContext(MainContext);
 
   useEffect(() => {
     fetchCards();
-  }, [props.isSearchInputData]);
+  }, [isSearchInput]);
 
   async function fetchCards() {
     try {
-      if (props.isSearchInputData) {
+      if (isSearchInput) {
         const res = await characterAPI.getCharacter();
         setAllCardsData([...res, ...allCardsData]);
       } else {
         const res = await characterAPI.getDefaultCharacter(); // (for run test replace whit:)  const res = await axios.get('response');
         setAllCardsData([...allCardsData, ...res]); // (for run test replace whit:)  [...allCardsData, ...res.data],
         setIsLoading(false);
-        props.setIsSearchInputData(false);
+        setIsSearchInput(false);
       }
     } catch (error) {
       setIsError(true);

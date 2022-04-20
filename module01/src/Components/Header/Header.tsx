@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC, useEffect, useState, useContext } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,8 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import { IAppState } from '../../App';
-import { useContext } from 'react';
+import MainContext from '../../App';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,9 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export interface IHeaderProps {
-  setIsSearchInputData: React.Dispatch<React.SetStateAction<IAppState>>;
-}
+/* export interface IHeaderProps {}
 
 export interface IHeaderState {
   searchValue: string;
@@ -96,7 +93,9 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
       this.props.setIsSearchInputData(true);
     }
   };
-  context = useContext(UserContext);
+
+   { isSearchInput, setIsSearchInput } = useContext(MainContext);
+
   public render() {
     return (
       <Box sx={{ flexGrow: 1 }}>
@@ -151,4 +150,93 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
       </Box>
     );
   }
+} */
+
+
+
+
+const Header: FC<string | null | boolean>= ( )=> {
+
+  const [searchValue, setSearchValue] = useState<boolean>();
+
+  useEffect() {
+    const isData = localStorage.getItem('searchValue') || 'Search..';
+    setSearchValue(Boolean(isData));
+  }
+
+  const handleChange = (event: React.KeyboardEvent<HTMLInputElement> & { target: HTMLInputElement }) => {
+    this.setState({ searchValue: event.target.value });
+    localStorage.setItem('searchValue', event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      this.handleSubmit();
+    }
+  };
+
+  handleSubmit = async () => {
+    const base: Array<string> = [];
+    base.push(this.state.searchValue);
+    const examples: Array<string> = ['character', 'Character'];
+    const isMatchWord = examples.some((el) => base.includes(el));
+    if (isMatchWord) {
+      this.props.setIsSearchInputData(true);
+    }
+  };
+
+  return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            >
+              RSSchool
+            </Typography>
+            <Stack spacing={2} direction="row">
+              <Button color="primary" variant="contained" component={Link} to={'/'}>
+                Home
+              </Button>
+              <Button color="primary" variant="contained" component={Link} to={'/form'}>
+                Form
+              </Button>
+              <Button color="primary" variant="contained" component={Link} to={'/aboutus'}>
+                About us
+              </Button>
+              <Button variant="contained" disabled>
+                Contained
+              </Button>
+            </Stack>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                data-testid="search"
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                value={this.state.searchValue}
+                onChange={this.handleChange}
+                onKeyDown={this.handleKeyPress}
+              />
+            </Search>
+          </Toolbar>
+        </AppBar>
+      </Box>
+  );
 }
+
+export default Header;

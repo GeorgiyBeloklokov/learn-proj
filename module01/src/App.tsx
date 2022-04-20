@@ -5,34 +5,26 @@ import Error404 from './Components/Error404/Error404';
 import Form from './Components/Form/Form';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Home from './Components/Home/Home';
-
-const UserContext = createContext<string | null>(null);
+import MainContext from './context';
 
 export interface IAppState {
   isSearchInputData: boolean;
 }
 
 const App: FC = () => {
+  const [isSearchInput, setIsSearchInput] = useState<boolean>(false);
   return (
     <>
-      <UserContext.Provider value="hello">
-        <Header setIsSearchInputData={setIsSearchInputData} />
+      <MainContext.Provider value={{ isSearchInput, setIsSearchInput }}>
+        <Header />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                setIsSearchInputData={setIsSearchInputData}
-                isSearchInputData={isSearchInputData}
-              />
-            }
-          />
+          <Route path="/" element={<Home />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/form" element={<Form />} />
           <Route path="/error404" element={<Error404 />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
-      </UserContext.Provider>
+      </MainContext.Provider>
     </>
   );
 };
