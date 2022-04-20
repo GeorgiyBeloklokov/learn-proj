@@ -55,188 +55,92 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-/* export interface IHeaderProps {}
+const Header: FC<string | null | boolean> = () => {
+  const { isSearchInput, setIsSearchInput } = useContext(MainContext);
+  console.log(`test: isSearchInput`, isSearchInput);
 
-export interface IHeaderState {
-  searchValue: string;
-}
+  const [searchValue, setSearchValue] = useState<string>('');
 
-export default class Header extends React.Component<IHeaderProps, IHeaderState> {
-  constructor(props: IHeaderProps) {
-    super(props);
-    this.state = {
-      searchValue: '',
-    };
-  }
-  componentDidMount() {
+  useEffect(() => {
     const isData = localStorage.getItem('searchValue') || 'Search..';
-    this.setState({ searchValue: isData });
-  }
+    setSearchValue(isData);
+  }, []);
 
-  handleChange = (event: React.KeyboardEvent<HTMLInputElement> & { target: HTMLInputElement }) => {
-    this.setState({ searchValue: event.target.value });
-    localStorage.setItem('searchValue', event.target.value);
-  };
-
-  handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      this.handleSubmit();
-    }
-  };
-
-  handleSubmit = async () => {
-    const base: Array<string> = [];
-    base.push(this.state.searchValue);
-    const examples: Array<string> = ['character', 'Character'];
-    const isMatchWord = examples.some((el) => base.includes(el));
-    if (isMatchWord) {
-      this.props.setIsSearchInputData(true);
-    }
-  };
-
-   { isSearchInput, setIsSearchInput } = useContext(MainContext);
-
-  public render() {
-    return (
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            >
-              RSSchool
-            </Typography>
-            <Stack spacing={2} direction="row">
-              <Button color="primary" variant="contained" component={Link} to={'/'}>
-                Home
-              </Button>
-              <Button color="primary" variant="contained" component={Link} to={'/form'}>
-                Form
-              </Button>
-              <Button color="primary" variant="contained" component={Link} to={'/aboutus'}>
-                About us
-              </Button>
-              <Button variant="contained" disabled>
-                Contained
-              </Button>
-            </Stack>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                data-testid="search"
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                value={this.state.searchValue}
-                onChange={this.handleChange}
-                onKeyDown={this.handleKeyPress}
-              />
-            </Search>
-          </Toolbar>
-        </AppBar>
-      </Box>
-    );
-  }
-} */
-
-
-
-
-const Header: FC<string | null | boolean>= ( )=> {
-
-  const [searchValue, setSearchValue] = useState<boolean>();
-
-  useEffect() {
-    const isData = localStorage.getItem('searchValue') || 'Search..';
-    setSearchValue(Boolean(isData));
-  }
-
-  const handleChange = (event: React.KeyboardEvent<HTMLInputElement> & { target: HTMLInputElement }) => {
-    this.setState({ searchValue: event.target.value });
+  const handleChange = (
+    event: React.KeyboardEvent<HTMLInputElement> & { target: HTMLInputElement }
+  ) => {
+    setSearchValue(event.target.value);
     localStorage.setItem('searchValue', event.target.value);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      this.handleSubmit();
+      handleSubmit();
     }
   };
 
-  handleSubmit = async () => {
+  const handleSubmit = () => {
     const base: Array<string> = [];
-    base.push(this.state.searchValue);
+    base.push(searchValue);
     const examples: Array<string> = ['character', 'Character'];
     const isMatchWord = examples.some((el) => base.includes(el));
     if (isMatchWord) {
-      this.props.setIsSearchInputData(true);
+      setIsSearchInput(true);
     }
   };
 
   return (
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            >
-              RSSchool
-            </Typography>
-            <Stack spacing={2} direction="row">
-              <Button color="primary" variant="contained" component={Link} to={'/'}>
-                Home
-              </Button>
-              <Button color="primary" variant="contained" component={Link} to={'/form'}>
-                Form
-              </Button>
-              <Button color="primary" variant="contained" component={Link} to={'/aboutus'}>
-                About us
-              </Button>
-              <Button variant="contained" disabled>
-                Contained
-              </Button>
-            </Stack>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                data-testid="search"
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-                value={this.state.searchValue}
-                onChange={this.handleChange}
-                onKeyDown={this.handleKeyPress}
-              />
-            </Search>
-          </Toolbar>
-        </AppBar>
-      </Box>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            RSSchool
+          </Typography>
+          <Stack spacing={2} direction="row">
+            <Button color="primary" variant="contained" component={Link} to={'/'}>
+              Home
+            </Button>
+            <Button color="primary" variant="contained" component={Link} to={'/form'}>
+              Form
+            </Button>
+            <Button color="primary" variant="contained" component={Link} to={'/aboutus'}>
+              About us
+            </Button>
+            <Button variant="contained" disabled>
+              Contained
+            </Button>
+          </Stack>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              data-testid="search"
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+              value={searchValue}
+              onChange={handleChange}
+              onKeyDown={handleKeyPress}
+            />
+          </Search>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
-}
+};
 
 export default Header;
