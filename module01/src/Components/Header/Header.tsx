@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import MainContext from '../../App';
+import CartContext from '../../context';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,9 +56,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header: FC<string | null | boolean> = () => {
-  const { isSearchInput, setIsSearchInput } = useContext(MainContext);
+  const cartContext = useContext(CartContext);
   console.log(`test: isSearchInput`, isSearchInput);
-
+  00;
   const [searchValue, setSearchValue] = useState<string>('');
 
   useEffect(() => {

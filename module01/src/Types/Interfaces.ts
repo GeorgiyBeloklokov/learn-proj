@@ -88,3 +88,23 @@ export interface ITableProps {
   maleFemale: boolean;
   promotionNotification: boolean;
 }
+
+export default interface IItem {
+  image: string;
+  id: number;
+  name: string;
+  status: string;
+  type: string;
+  gender: string;
+  species: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  created: string;
+}
