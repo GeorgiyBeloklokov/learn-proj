@@ -1,38 +1,54 @@
-import React, { FC, useEffect, useState, useContext } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import CardPage from '../CardPage/CardPage';
 import { CharacterResponseType } from '../../Types/Types';
-import { IAppState } from '../../App';
+
 import { characterAPI } from '../ApiService/ApiService';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import MainContext from '../../App';
+import { AppContext } from '../../fakeRedux/context';
+import { Types } from '../../fakeRedux/reducers';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 /* export interface IHomeProps {
   isSearchInput: boolean;
 }
  */
-const Home: FC<string | null | boolean> = () => {
+const Home: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [allCardsData, setAllCardsData] = useState<Array<CharacterResponseType>>([]);
-  const [isError, setIsError] = useState<boolean>(false);
-  const { isSearchInput, setIsSearchInput } = useContext(MainContext);
+  console.log(`test allCardsData`, allCardsData);
 
-  useEffect(() => {
-    fetchCards();
-  }, [isSearchInput]);
+  const [isError, setIsError] = useState<boolean>(false);
+  const { state, dispatch } = useContext(AppContext);
+  console.log(`test state1111111:`, state.cards);
+
+  useEffect(
+    () => {
+      fetchCards();
+    },
+    [
+      /* isSearchInput */
+    ]
+  );
 
   async function fetchCards() {
+    console.log(`test isSearchInput`, state.isSearchInput);
+
     try {
-      if (isSearchInput) {
+      if (null) {
         const res = await characterAPI.getCharacter();
         setAllCardsData([...res, ...allCardsData]);
       } else {
-        const res = await characterAPI.getDefaultCharacter(); // (for run test replace whit:)  const res = await axios.get('response');
+        const res = await characterAPI.getDefaultCharacter();
+        dispatch({
+          type: Types.Get,
+          payload: res,
+        }); // (for run test replace whit:)  const res = await axios.get('response');
         setAllCardsData([...allCardsData, ...res]); // (for run test replace whit:)  [...allCardsData, ...res.data],
         setIsLoading(false);
-        setIsSearchInput(false);
+        /* setIsSearchInput(false); */
       }
     } catch (error) {
       setIsError(true);
@@ -66,7 +82,7 @@ const Home: FC<string | null | boolean> = () => {
           </Typography>
         </>
       )}
-      {allCardsData.map((item) => (
+      {state.cards.map((item) => (
         <Grid
           key={item.id}
           sx={{ ml: 4, mt: 10, display: 'flex', justifyContent: 'space-between' }}

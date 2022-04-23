@@ -35,12 +35,12 @@ const Form: FC = () => {
 
   const onSubmit: SubmitHandler<IFormProps> = (data: IFormProps) => {
     const newDataPicker = data.muiDatePicker?.toString();
-
+    /* cartContext.cartDispatch({ type: 'set_formState', payload: data }); */
     setState([
       ...state,
       {
         ...data,
-        id: Date.now(),
+        id: Date.now().toString(),
         muiDatePicker: newDataPicker,
       },
     ]);

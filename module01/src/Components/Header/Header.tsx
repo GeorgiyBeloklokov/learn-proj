@@ -11,7 +11,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import CartContext from '../../context';
+import { AppContext } from '../../fakeRedux/context';
+import { Types } from '../../fakeRedux/reducers';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,11 +56,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Header: FC<string | null | boolean> = () => {
-  const cartContext = useContext(CartContext);
-  console.log(`test: isSearchInput`, isSearchInput);
-  00;
+const Header: FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const { state, dispatch } = React.useContext(AppContext);
 
   useEffect(() => {
     const isData = localStorage.getItem('searchValue') || 'Search..';
@@ -85,7 +84,10 @@ const Header: FC<string | null | boolean> = () => {
     const examples: Array<string> = ['character', 'Character'];
     const isMatchWord = examples.some((el) => base.includes(el));
     if (isMatchWord) {
-      setIsSearchInput(true);
+      dispatch({
+        type: Types.Toggle,
+        payload: true,
+      });
     }
   };
 
