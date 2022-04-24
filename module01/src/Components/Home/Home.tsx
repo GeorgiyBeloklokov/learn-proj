@@ -17,37 +17,42 @@ import { Types } from '../../fakeRedux/reducers';
  */
 const Home: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [allCardsData, setAllCardsData] = useState<Array<CharacterResponseType>>([]);
-  console.log(`test allCardsData`, allCardsData);
 
   const [isError, setIsError] = useState<boolean>(false);
   const { state, dispatch } = useContext(AppContext);
-  console.log(`test state1111111:`, state.cards);
+  console.log(`test state1111111:`, state);
 
-  useEffect(
-    () => {
-      fetchCards();
-    },
-    [
-      /* isSearchInput */
-    ]
-  );
+  useEffect(() => {
+    fetchCards();
+  }, [state.isSearchInput]);
 
   async function fetchCards() {
-    console.log(`test isSearchInput`, state.isSearchInput);
-
     try {
-      if (null) {
-        const res = await characterAPI.getCharacter();
-        setAllCardsData([...res, ...allCardsData]);
+      if (state.isSearchInput) {
+        const res = await characterAPI.getMoreFiveCharacter();
+        dispatch({
+          type: Types.Get,
+          payload: res,
+        });
+        dispatch({
+          type: Types.isLoading,
+          payload: false,
+        });
+        dispatch({
+          type: Types.Toggle,
+          payload: false,
+        });
       } else {
         const res = await characterAPI.getDefaultCharacter();
         dispatch({
           type: Types.Get,
           payload: res,
         }); // (for run test replace whit:)  const res = await axios.get('response');
-        setAllCardsData([...allCardsData, ...res]); // (for run test replace whit:)  [...allCardsData, ...res.data],
-        setIsLoading(false);
+        /* setAllCardsData([...allCardsData, ...res]); */ // (for run test replace whit:)  [...allCardsData, ...res.data],
+        dispatch({
+          type: Types.isLoading,
+          payload: false,
+        });
         /* setIsSearchInput(false); */
       }
     } catch (error) {
@@ -66,7 +71,7 @@ const Home: FC = () => {
       >
         Enter word &quot;Character&quot; in Search and press &quot;Enter&quot;
       </Typography>
-      {isLoading && (
+      {state.isLoading && (
         <>
           <Box sx={{ display: 'flex', position: 'absolute', ml: 45, mt: 5 }}>
             <CircularProgress />

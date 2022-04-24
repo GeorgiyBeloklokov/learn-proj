@@ -11,7 +11,7 @@ export const characterAPI = {
       return response.data;
     });
   },
-  getCharacter() {
+  getMoreFiveCharacter() {
     return instance.get(`/character/6,7,8,9,10`).then((response) => {
       return response.data;
     });

@@ -4,10 +4,12 @@ import { cardsReducer, isSearchInputReducer, CardActions, isSearchInputActions }
 
 export type InitialStateType = {
   cards: CardType[];
+  isLoading: boolean;
   isSearchInput: boolean;
 };
 const initialState = {
   cards: [],
+  isLoading: true,
   isSearchInput: false,
 };
 
@@ -25,6 +27,7 @@ const mainReducer = (
 ) => ({
   cards: cardsReducer(cards, action),
   isSearchInput: isSearchInputReducer(isSearchInput, action),
+  isLoading: isSearchInputReducer(isSearchInput, action),
 });
 
 const AppProvider: React.FC = ({ children }) => {
