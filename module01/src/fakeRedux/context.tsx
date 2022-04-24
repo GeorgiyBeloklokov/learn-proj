@@ -1,16 +1,18 @@
 import React, { createContext, useReducer, Dispatch } from 'react';
-import { CardType } from '../Types/Types';
+import { CardType, CharacterResponseType } from '../Types/Types';
 import { cardsReducer, isSearchInputReducer, CardActions, isSearchInputActions } from './reducers';
 
 export type InitialStateType = {
   cards: CardType[];
   isLoading: boolean;
   isSearchInput: boolean;
+  SetItem: object;
 };
 const initialState = {
   cards: [],
   isLoading: true,
   isSearchInput: false,
+  SetItem: {},
 };
 
 const AppContext = createContext<{
@@ -28,6 +30,7 @@ const mainReducer = (
   cards: cardsReducer(cards, action),
   isSearchInput: isSearchInputReducer(isSearchInput, action),
   isLoading: isSearchInputReducer(isSearchInput, action),
+  SetItem: isSearchInputReducer(isSearchInput, action),
 });
 
 const AppProvider: React.FC = ({ children }) => {

@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ModalFirst from '../ModalFirst/ModalFirst';
 import { ICardPageProps } from '../../Types/Interfaces';
+import { Link } from 'react-router-dom';
 
 export interface ICardPageState {
   open: boolean;
@@ -22,8 +23,8 @@ export default class CardPage extends React.Component<ICardPageProps, ICardPageS
 
   public render() {
     return (
-      <Card sx={{ mb: 7, maxWidth: 300, maxHeight: 230 }}>
-        <ModalFirst
+      <Card sx={{ mb: -14, maxWidth: 300, maxHeight: 230 }}>
+        {/* <ModalFirst
           image={this.props.image}
           setState={this.setState}
           open={this.state.open}
@@ -37,7 +38,7 @@ export default class CardPage extends React.Component<ICardPageProps, ICardPageS
           location={this.props.location}
           url={this.props.url}
           created={this.props.created}
-        />
+        /> */}
         <CardMedia
           data-testid="card-home"
           component="img"
@@ -45,7 +46,12 @@ export default class CardPage extends React.Component<ICardPageProps, ICardPageS
           height="180"
           image={this.props.image}
         />
-        <Button onClick={() => this.setState({ open: true })}>Show more...</Button>
+        <Button
+          component={Link}
+          to={`/itemPage${this.props.id}`} /* onClick={() => this.setState({ open: true })} */
+        >
+          Show more...
+        </Button>
       </Card>
     );
   }

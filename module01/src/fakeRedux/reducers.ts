@@ -15,7 +15,7 @@ type ActionMap<M extends { [index: string]: any }> = {
 export enum Types {
   Get = 'GET_CARD',
   isLoading = 'IS_LOADING',
-  /* Delete = 'DELETE_PRODUCT', */
+  SetItem = 'SET_ITEM',
   Toggle = 'TOGGLE_IS_SEARCH_INPUT',
 }
 
@@ -23,9 +23,6 @@ export enum Types {
 
 type CardPayload = {
   [Types.Get]: CardType[];
-  /* [Types.Delete]: {
-    id: number;
-  }; */
 };
 
 export type CardActions = ActionMap<CardPayload>[keyof ActionMap<CardPayload>];
@@ -33,10 +30,8 @@ export type CardActions = ActionMap<CardPayload>[keyof ActionMap<CardPayload>];
 export const cardsReducer = (state: CardType[], action: CardActions | isSearchInputActions) => {
   switch (action.type) {
     case Types.Get:
-      return [...state, ...action.payload];
+      return [...action.payload];
 
-    /* case Types.Delete:
-      return [...state.filter((product) => product.id !== action.payload.id)]; */
     default:
       return state;
   }
@@ -47,6 +42,7 @@ export const cardsReducer = (state: CardType[], action: CardActions | isSearchIn
 type isSearchInputPayload = {
   [Types.Toggle]: boolean;
   [Types.isLoading]: boolean;
+  [Types.SetItem]: object;
 };
 
 export type isSearchInputActions =
@@ -60,6 +56,8 @@ export const isSearchInputReducer = (
     case Types.Toggle:
       return action.payload;
     case Types.isLoading:
+      return action.payload;
+    case Types.SetItem:
       return action.payload;
     default:
       return state;

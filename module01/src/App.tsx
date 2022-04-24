@@ -6,6 +6,7 @@ import Form from './Components/Form/Form';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Home from './Components/Home/Home';
 import { AppProvider } from './fakeRedux/context';
+import ItemPage from './Components/IttemPage/ItemPage';
 
 /* export interface IAppState {
   isSearchInputData: boolean;
@@ -24,7 +25,8 @@ const App: FC = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          <Route path="/itemPage:id" element={<ItemPage />} />
           <Route path="/form" element={<Form />} />
           <Route path="/error404" element={<Error404 />} />
           <Route path="*" element={<Error404 />} />

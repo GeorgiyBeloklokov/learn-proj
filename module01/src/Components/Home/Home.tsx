@@ -1,15 +1,15 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
 import CardPage from '../CardPage/CardPage';
-import { CharacterResponseType } from '../../Types/Types';
-
 import { characterAPI } from '../ApiService/ApiService';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-import MainContext from '../../App';
 import { AppContext } from '../../fakeRedux/context';
 import { Types } from '../../fakeRedux/reducers';
+import ControlledCheckbox from './Checkbox';
+import MyPagination from './MyPagination';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 /* export interface IHomeProps {
   isSearchInput: boolean;
@@ -20,30 +20,16 @@ const Home: FC = () => {
 
   const [isError, setIsError] = useState<boolean>(false);
   const { state, dispatch } = useContext(AppContext);
-  console.log(`test state1111111:`, state);
+  /* console.log(`test state Home:`, state); */
 
   useEffect(() => {
     fetchCards();
   }, [state.isSearchInput]);
 
   async function fetchCards() {
-    try {
-      if (state.isSearchInput) {
+    if (state.isSearchInput) {
+      try {
         const res = await characterAPI.getMoreFiveCharacter();
-        dispatch({
-          type: Types.Get,
-          payload: res,
-        });
-        dispatch({
-          type: Types.isLoading,
-          payload: false,
-        });
-        dispatch({
-          type: Types.Toggle,
-          payload: false,
-        });
-      } else {
-        const res = await characterAPI.getDefaultCharacter();
         dispatch({
           type: Types.Get,
           payload: res,
@@ -53,17 +39,35 @@ const Home: FC = () => {
           type: Types.isLoading,
           payload: false,
         });
-        /* setIsSearchInput(false); */
-      }
-    } catch (error) {
+        dispatch({
+          type: Types.Toggle,
+          payload: false,
+        });
+      } catch (error) {}
       setIsError(true);
+    } else {
+      const res = await characterAPI.getDefaultCharacter();
+      /* console.log(`test res reducer`, res); */
+
+      dispatch({
+        type: Types.Get,
+        payload: res,
+      });
+      dispatch({
+        type: Types.isLoading,
+        payload: false,
+      });
+      dispatch({
+        type: Types.Toggle,
+        payload: false,
+      });
     }
   }
 
   return (
     <Grid container spacing={3}>
       <Typography
-        sx={{ position: 'absolute', ml: 95, mt: 3 }}
+        sx={{ position: 'absolute', ml: 85, mt: 3 }}
         color="primary"
         gutterBottom
         variant="h6"
@@ -71,6 +75,17 @@ const Home: FC = () => {
       >
         Enter word &quot;Character&quot; in Search and press &quot;Enter&quot;
       </Typography>
+
+      <Box sx={{ display: 'flex', position: 'absolute', ml: 10, mt: 8 }}>
+        <ControlledCheckbox label="Filtered bu Alive Male" status="alive" gender="male" />
+        <ControlledCheckbox label="Filtered bu Dead Female" status="dead" gender="female" />
+        <ControlledCheckbox label="Filtered bu Unknown Female" status="unknown" gender="female" />
+        <ControlledCheckbox label="Filtered bu Unknown Male" status="unknown" gender="male" />
+      </Box>
+      <Box sx={{ display: 'flex', position: 'absolute', ml: 12, mt: 15 }}>
+        <MyPagination />
+      </Box>
+
       {state.isLoading && (
         <>
           <Box sx={{ display: 'flex', position: 'absolute', ml: 45, mt: 5 }}>
@@ -90,7 +105,12 @@ const Home: FC = () => {
       {state.cards.map((item) => (
         <Grid
           key={item.id}
-          sx={{ ml: 4, mt: 10, display: 'flex', justifyContent: 'space-between' }}
+          sx={{
+            ml: 4,
+            mt: 18,
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
           xs={12}
           sm={6}
           md={4}
