@@ -21,7 +21,7 @@ export default function MyPagination() {
 
   const handleChange = async (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    const res = await characterAPI.getNextCharacter(page + 1);
+    const res = await characterAPI.getNextCharacter(page + '1');
     const res5 = res.results.slice(0, 5);
     const res10 = res.results.slice(0, 10);
     if (checked1) {

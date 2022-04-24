@@ -46,10 +46,7 @@ export default class CardPage extends React.Component<ICardPageProps, ICardPageS
           height="180"
           image={this.props.image}
         />
-        <Button
-          component={Link}
-          to={`/itemPage${this.props.id}`} /* onClick={() => this.setState({ open: true })} */
-        >
+        <Button component={Link} to={`/itemPage${this.props.id}`}>
           Show more...
         </Button>
       </Card>

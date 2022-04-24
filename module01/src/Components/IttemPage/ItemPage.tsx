@@ -12,11 +12,13 @@ import { CardType } from '../../Types/Types';
 const ItemPage: FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const { id } = useParams<{ id?: string }>();
-  const [itemState, setItemState] = useState<CardType>();
 
-  console.log(`test state22222eee`, state);
+  console.log(`test id params`, id);
+  const actualData = state?.cards?.[id];
 
-  useEffect(() => {
+  console.log(`test stateItemPage`, state.cards?.[id]);
+
+  /*   useEffect(() => {
     fetchCards();
   }, []);
 
@@ -24,21 +26,21 @@ const ItemPage: FC = () => {
     try {
       const res = await characterAPI.getByIdCharacter(id);
       console.log(`test getByIdCharacter`, res);
-      /* setItemState(res); */
+      setItemState(res);
       dispatch({
         type: Types.SetItem,
         payload: res,
       });
-      /* dispatch({
+      dispatch({
         type: Types.isLoading,
         payload: false,
       });
       dispatch({
         type: Types.Toggle,
         payload: false,
-      }); */
+      });
     } catch (error) {}
-  }
+  } */
 
   return (
     <Box
@@ -48,20 +50,19 @@ const ItemPage: FC = () => {
         flexWrap: 'wrap',
         '& > :not(style)': {
           m: 1,
-          width: 800,
-          height: 750,
+          width: 250,
+          height: 450,
         },
       }}
     >
-      <CardMedia component="img" alt="image" height="280" image={state.SetItem.image} />
-      <div>helooooo</div>
-      {/* <Typography
+      <CardMedia component="img" alt="image" height="180" image={actualData.image} />
+      <Typography
         sx={{
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           WebkitLineClamp: 3,
           WebkitBoxOrient: 'vertical',
-          fontSize: 25,
+          fontSize: 15,
           ml: 15,
           mt: 10,
         }}
@@ -70,30 +71,30 @@ const ItemPage: FC = () => {
         variant="body2"
         component="div"
       >
-        Id: {state.cards.id}
+        Id: {actualData.id}
         <br />
-        Name: {state.cards.name}
+        Name: {actualData.name}
         <br />
-        Status: {state.cards.status}
+        Status: {actualData.status}
         <br />
-        Species: {state.cards.species}
+        Species: {actualData.species}
         <br />
-        Type: {state.cards.type}
+        Type: {actualData.type}
         <br />
-        Gender: {state.cards.gender}
+        Gender: {actualData.gender}
         <br />
-        Origin Name: {state.cards.origin.name}
+        Origin Name: {actualData.origin.name}
         <br />
-        Origin URL: {state.cards.origin.url}
+        Origin URL: {actualData.origin.url}
         <br />
-        Location Name: {state.cards.location.name}
+        Location Name: {actualData.location.name}
         <br />
-        Location URL: {state.cards.location.url}
+        Location URL: {actualData.location.url}
         <br />
-        Url: {state.cards.url}
+        Url: {actualData.url}
         <br />
-        Created: {state.cards.created}
-      </Typography> */}
+        Created: {actualData.created}
+      </Typography>
     </Box>
   );
 };

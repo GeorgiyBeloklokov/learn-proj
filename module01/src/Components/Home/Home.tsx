@@ -20,7 +20,7 @@ const Home: FC = () => {
 
   const [isError, setIsError] = useState<boolean>(false);
   const { state, dispatch } = useContext(AppContext);
-  /* console.log(`test state Home:`, state); */
+  console.log(`test state Home:`, state);
 
   useEffect(() => {
     fetchCards();

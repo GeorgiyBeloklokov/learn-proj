@@ -15,11 +15,10 @@ type ActionMap<M extends { [index: string]: any }> = {
 export enum Types {
   Get = 'GET_CARD',
   isLoading = 'IS_LOADING',
-  SetItem = 'SET_ITEM',
   Toggle = 'TOGGLE_IS_SEARCH_INPUT',
 }
 
-// Card
+// Card Reducer
 
 type CardPayload = {
   [Types.Get]: CardType[];
@@ -31,18 +30,16 @@ export const cardsReducer = (state: CardType[], action: CardActions | isSearchIn
   switch (action.type) {
     case Types.Get:
       return [...action.payload];
-
     default:
       return state;
   }
 };
 
-// isSearchInput
+// isSearchInput Reducer
 
 type isSearchInputPayload = {
   [Types.Toggle]: boolean;
   [Types.isLoading]: boolean;
-  [Types.SetItem]: object;
 };
 
 export type isSearchInputActions =
@@ -57,8 +54,7 @@ export const isSearchInputReducer = (
       return action.payload;
     case Types.isLoading:
       return action.payload;
-    case Types.SetItem:
-      return action.payload;
+
     default:
       return state;
   }
